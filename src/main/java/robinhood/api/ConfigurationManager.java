@@ -51,5 +51,15 @@ public class ConfigurationManager {
 		return this.authToken;
 	}
 	
+	/**
+	 * Method which registers the authToken for the user into the Configuration Manager
+	 * 
+	 * @param The verified Authorization Token for the user
+	 */
+	public void setAuthToken(String token) {
+		
+		ConfigurationManager.instance.authToken = token;
+	}
+	
 
 }
