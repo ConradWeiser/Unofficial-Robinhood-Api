@@ -1,6 +1,11 @@
 package robinhood.api;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import robinhood.api.endpoint.authorize.data.Token;
+import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
+import robinhood.api.request.RequestManager;
 
 public class RobinhoodApi {
 	
@@ -8,6 +13,11 @@ public class RobinhoodApi {
 	 * The Logger object used for the custom error handling
 	 */
 	public static final Logger log = Logger.getLogger(RobinhoodApi.class.getName());
+	
+	/**
+	 * The instance used to make the requests
+	 */
+	private static RequestManager requestManager = null;
 	
 	
 	/**
@@ -19,6 +29,7 @@ public class RobinhoodApi {
 	public RobinhoodApi() {
 		
 		//Do nothing. Allow users to access the unauthorized sections of the API
+		RobinhoodApi.requestManager = RequestManager.getInstance();
 	}
 	
 	/**
@@ -30,7 +41,15 @@ public class RobinhoodApi {
 	 */
 	public RobinhoodApi(String username, String password) {
 		
-		//TODO: Attempt to authorize
+		//TODO: Implement multifactor authorization
+		ApiMethod method = new AuthorizeWithoutMultifactor(username, password);
+		try {
+			Token token = RequestManager.getInstance().makeApiRequest(method);
+			System.out.println(token.getToken());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
