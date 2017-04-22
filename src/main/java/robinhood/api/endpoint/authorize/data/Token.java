@@ -4,7 +4,7 @@ package robinhood.api.endpoint.authorize.data;
  * Class declaring the return structure so Gson can handle parsing the JSON
  *
  */
-public class TokenResponse {
+public class Token {
 	
 	private String token = null;
 	
