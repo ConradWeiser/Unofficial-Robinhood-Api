@@ -1,6 +1,8 @@
 package robinhood.api;
 
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -116,15 +118,16 @@ public abstract class ApiMethod {
 	/**
 	 * Method which gets the loaded URL with all of the parameters included in 
 	 * the urlParameters
+	 * @throws MalformedURLException 
 	 */
-	public String getUrl() {
+	public URL getUrl() throws MalformedURLException {
 		StringBuilder builder = new StringBuilder(urlBase);
 		char connectorValue = '?';
 		for (UrlParameter p : urlParameters) {
 			builder.append(connectorValue).append(p.toString());
 			connectorValue = '&';
 		}
-		return builder.toString();
+		return new URL(builder.toString());
 	}
 	
 	/**
