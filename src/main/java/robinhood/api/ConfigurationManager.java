@@ -18,6 +18,11 @@ public class ConfigurationManager {
 	private String authToken = null;
 	
 	/**
+	 * The current ratelimit. How long should the system wait between requests?
+	 */
+	private int rateLimitValue = 500;
+	
+	/**
 	 * The current instance of the ConfigurationManager
 	 */
 	private static ConfigurationManager instance = null;
@@ -60,6 +65,24 @@ public class ConfigurationManager {
 		
 		ConfigurationManager.instance.authToken = token;
 	}
+	
+	/**
+	 * Method returning the current ratelimit.
+	 * By default, this is 500 milliseconds (.5 seconds)
+	 */
+	public int getRatelimit() {
+		
+		return this.rateLimitValue;
+	}
+	
+	/**
+	 * Set a new ratelimit (in milliseconds)
+	 */
+	public void setRatelimit(int newRateLimitValue) {
+		
+		this.rateLimitValue = newRateLimitValue;
+	}
+	
 	
 
 }

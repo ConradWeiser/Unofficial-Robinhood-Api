@@ -13,6 +13,15 @@ public abstract class ApiMethod {
 	
 	private final ConfigurationManager manager = ConfigurationManager.getInstance();
 	private String urlBase;
+	public final String service;
+	
+	
+	/**
+	 * Constructor which stores the service which is being used
+	 */
+	protected ApiMethod(String service) {
+		this.service = service;
+	}
 	
 	/**
 	 * Linked List containing all of the urlParameters for the next request
@@ -50,8 +59,15 @@ public abstract class ApiMethod {
 	 * A method which adds a HttpHeaderParameter to the API request header
 	 * @param The parameter which should be added into the ApiRequest
 	 */
-	protected void add(HttpHeaderParameter param) {
+	protected void addHttpHeaderParameter(HttpHeaderParameter param) {
 		httpHeaderParameters.add(param);
+	}
+	
+	/**
+	 * A method which adds a HttpUrlParameter to the API URL
+	 */
+	protected void addUrlParameter(UrlParameter param) {
+		urlParameters.add(param);
 	}
 	
 	/**
@@ -59,7 +75,7 @@ public abstract class ApiMethod {
 	 * @throws TokenNotFoundException if the token does not exist. If the user is not logged in.
 	 */
 	protected void addAuthTokenParameter() throws TokenNotFoundException {
-		add(new HttpHeaderParameter("Authorization", manager.getToken()));
+		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", manager.getToken()));
 	}
 	
 	/**
