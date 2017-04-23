@@ -131,6 +131,27 @@ public abstract class ApiMethod {
 	}
 	
 	/**
+	 * Method which gets all of the URL parameters, without including them in the URL base
+	 * This is useful for POST requests, which require these parameters to not be given as GET
+	 * variables, but to be used in the POST value
+	 */
+	public String getUrlParametersAsPostBody() {
+		StringBuilder builder = new StringBuilder();
+		char connectorValue = '&';
+		boolean first = true;
+		for (UrlParameter p : urlParameters) {
+			if(first){
+				builder.append(p.toString());
+				first = false;
+			}
+			else
+				builder.append(connectorValue).append(p.toString());
+		}
+		
+		return builder.toString();
+	}
+	
+	/**
 	 * Method to set the request to require an AuthToken
 	 */
 	protected void requireToken() {

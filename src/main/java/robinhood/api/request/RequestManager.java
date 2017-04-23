@@ -7,6 +7,8 @@ import java.util.Iterator;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -14,6 +16,7 @@ import okhttp3.Request.Builder;
 import okhttp3.Response;
 import robinhood.api.ApiMethod;
 import robinhood.api.parameters.HttpHeaderParameter;
+import robinhood.api.parameters.UrlParameter;
 
 public class RequestManager {
 	
@@ -79,20 +82,21 @@ public class RequestManager {
 		Builder builder = new Request.Builder();
 		
 		//Add the URL into the builder
-		builder.url(method.getUrl());
+		builder.url(method.getUrl());x
 		
-		//We do not use request bodies, Specify that we are using POST without one
-		RequestBody body = RequestBody.create(null, new byte[0]);
-		builder.method("POST", body);
+		//Append the URL parameters into the POST body
+		final MediaType text = MediaType.parse("application/x-www-form-urlencoded");		
+		builder.post(RequestBody.create(text, method.getUrlParametersAsPostBody()));
 		
 		//Append any header information if available
-		Iterator<HttpHeaderParameter> it = method.getHttpHeaderParameters().iterator();
-		while(it.hasNext()) {
+		Iterator<HttpHeaderParameter> itHeader = method.getHttpHeaderParameters().iterator();
+		while(itHeader.hasNext()) {
 			
-			HttpHeaderParameter currentElement = it.next();
+			HttpHeaderParameter currentElement = itHeader.next();
 			builder.addHeader(currentElement.getKey(), currentElement.getValue());
 		}
 		
+		//Execute the API request
 		System.out.println("Execute the post");
 		Response response = client.newCall(builder.build()).execute();
 		System.out.println("Done");
@@ -107,7 +111,7 @@ public class RequestManager {
 		//Use Gson to convert the type into it's proper class wrapper
 		T data = null;
 		try {
-			
+			System.out.println(response.body().string());
 			data = new Gson().fromJson(response.body().string(), method.getReturnType());
 		} catch (JsonSyntaxException ex) {
 			

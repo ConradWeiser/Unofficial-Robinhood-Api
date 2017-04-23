@@ -10,7 +10,7 @@ public class AuthorizeWithoutMultifactor extends Authentication {
 	
 	public AuthorizeWithoutMultifactor(String username, String password) {
 		
-		setUrlBase("http://api.robinhood.com/api-token-auth");
+		setUrlBase("https://api.robinhood.com/api-token-auth");
 		
 		//Add the parameters into the request
 		this.addUrlParameter(new UrlParameter("username", username));
