@@ -117,7 +117,7 @@ public abstract class ApiMethod {
 	
 	/**
 	 * Method which gets the loaded URL with all of the parameters included in 
-	 * the urlParameters
+	 * the GET url parameters
 	 * @throws MalformedURLException 
 	 */
 	public URL getUrl() throws MalformedURLException {
@@ -128,6 +128,13 @@ public abstract class ApiMethod {
 			connectorValue = '&';
 		}
 		return new URL(builder.toString());
+	}
+	
+	/**
+	 * Method which returns the base URL without any of the parameters
+	 */
+	public String getBaseUrl() {
+		return this.urlBase;
 	}
 	
 	/**

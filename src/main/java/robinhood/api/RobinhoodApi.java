@@ -3,6 +3,8 @@ package robinhood.api;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import robinhood.api.endpoint.authorize.data.Token;
 import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import robinhood.api.request.RequestManager;
@@ -46,7 +48,7 @@ public class RobinhoodApi {
 		try {
 			Token token = RequestManager.getInstance().makeApiRequest(method);
 			System.out.println(token.getToken());
-		} catch (IOException e) {
+		} catch (UnirestException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

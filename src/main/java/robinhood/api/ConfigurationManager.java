@@ -20,7 +20,7 @@ public class ConfigurationManager {
 	/**
 	 * The current ratelimit. How long should the system wait between requests?
 	 */
-	private int rateLimitValue = 500;
+	private long rateLimitValue = 2000;
 	
 	/**
 	 * The current instance of the ConfigurationManager
@@ -70,7 +70,7 @@ public class ConfigurationManager {
 	 * Method returning the current ratelimit.
 	 * By default, this is 500 milliseconds (.5 seconds)
 	 */
-	public int getRatelimit() {
+	public long getRatelimit() {
 		
 		return this.rateLimitValue;
 	}

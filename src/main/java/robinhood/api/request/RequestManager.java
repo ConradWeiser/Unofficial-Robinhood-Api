@@ -1,22 +1,18 @@
 package robinhood.api.request;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Iterator;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.HttpRequestWithBody;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Request.Builder;
-import okhttp3.Response;
 import robinhood.api.ApiMethod;
 import robinhood.api.parameters.HttpHeaderParameter;
-import robinhood.api.parameters.UrlParameter;
+
 
 public class RequestManager {
 	
@@ -42,7 +38,7 @@ public class RequestManager {
 	}
 	
 	
-	public <T> T makeApiRequest(ApiMethod method) throws IOException {
+	public <T> T makeApiRequest(ApiMethod method) throws UnirestException {
 		
 		T response = null;
 				
@@ -73,111 +69,45 @@ public class RequestManager {
 	
 	/**
 	 * Method which uses OKHTTP to send a POST request to the specified URL saved
-	 * within the APIMethod class
-	 * @throws IOException 
+	 * within the APIMethod class 
+	 * @throws UnirestException 
 	 */
-	private <T> T makePostRequest(ApiMethod method) throws IOException {
+	private <T> T makePostRequest(ApiMethod method) throws UnirestException {
 		
-		OkHttpClient client = new OkHttpClient();
-		Builder builder = new Request.Builder();
-		
-		//Add the URL into the builder
-		builder.url(method.getUrl());x
-		
-		//Append the URL parameters into the POST body
-		final MediaType text = MediaType.parse("application/x-www-form-urlencoded");		
-		builder.post(RequestBody.create(text, method.getUrlParametersAsPostBody()));
-		
-		//Append any header information if available
-		Iterator<HttpHeaderParameter> itHeader = method.getHttpHeaderParameters().iterator();
-		while(itHeader.hasNext()) {
+		HttpRequestWithBody request = Unirest.post(method.getBaseUrl());
 			
-			HttpHeaderParameter currentElement = itHeader.next();
-			builder.addHeader(currentElement.getKey(), currentElement.getValue());
+		//Append each of the headers for the method
+		Iterator<HttpHeaderParameter> headerIterator = method.getHttpHeaderParameters().iterator();
+		while(headerIterator.hasNext()) {
+			
+			HttpHeaderParameter currentHeader = headerIterator.next();
+			request.header(currentHeader.getKey(), currentHeader.getValue());
 		}
+				
+		//Append the request body
+		request.body(method.getUrlParametersAsPostBody());
 		
-		//Execute the API request
-		System.out.println("Execute the post");
-		Response response = client.newCall(builder.build()).execute();
-		System.out.println("Done");
+		//Make the request
+		HttpResponse<JsonNode> jsonResponse = request.asJson();
 		
-		//If there is no type defined, throw an error
-		if (method.getReturnType() == null) {
-			
-			throw new NullPointerException("This API method: " + method + " doesn't have a type setup."
-					+ "File a bug if you see this. An endpoint is not setup properly");
-		}
+		//Parse the response with Gson
+		Gson gson = new Gson();
+		String responseJsonString = jsonResponse.getBody().toString();
 		
-		//Use Gson to convert the type into it's proper class wrapper
-		T data = null;
-		try {
-			System.out.println(response.body().string());
-			data = new Gson().fromJson(response.body().string(), method.getReturnType());
-		} catch (JsonSyntaxException ex) {
-			
-			//TODO: Throw custom exception
-		}
+		T data = gson.fromJson(responseJsonString, method.getReturnType());
+		return data;
 		
-		//If we didn't get any data, throw an error
-		if(data == null) {
-			
-			//TODO: Throw custom exception
-			
-		}
 		
-		return data;	
 		
 		
 	}
 	
 	/**
 	 * Method which uses OKHTTP to send a GET request to the specified URL saved
-	 * within the ApiMethod class
-	 * @throws IOException 
+	 * within the ApiMethod class 
 	 */
-	private <T> T makeGetRequest(ApiMethod method) throws IOException {
-		
-		OkHttpClient client = new OkHttpClient();
-		Builder builder = new Request.Builder();
-		
-		//Add the URL into the builder
-		builder.url(method.getUrl());
-		
-		//Append any header information if available
-		Iterator<HttpHeaderParameter> it = method.getHttpHeaderParameters().iterator();
-		while(it.hasNext()) {
-			
-			HttpHeaderParameter currentElement = it.next();
-			builder.addHeader(currentElement.getKey(), currentElement.getValue());
-		}
-		
-		Response response = client.newCall(builder.build()).execute();
-		
-		//If there is no type defined, throw an error
-		if (method.getReturnType() == null) {
-			
-			throw new NullPointerException("This API method: " + method + " doesn't have a type setup."
-					+ "File a bug if you see this. An endpoint is not setup properly");
-		}
-		
-		//Use Gson to convert the type into it's proper class wrapper
-		T data = null;
-		try {
-			
-			data = new Gson().fromJson(response.body().string(), method.getReturnType());
-		} catch (JsonSyntaxException ex) {
-			
-			//TODO: Throw custom exception
-		}
-		
-		//If we didn't get any data, throw an error
-		if(data == null) {
-			
-			//TODO: Throw custom exception
-			
-		}
-		
-		return data;	
+	private <T> T makeGetRequest(ApiMethod method) {
+	
 		
 	}
 	
