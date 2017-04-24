@@ -1,6 +1,5 @@
 package robinhood.api.request;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import com.google.gson.Gson;
@@ -46,8 +45,8 @@ public class RequestManager {
 		switch(method.getMethod()) {
 		case DELETE:
 			break;
-		case GET: response = this.makeGetRequest(method);
-			break;
+//		case GET: response = this.makeGetRequest(method);
+//			break;
 		case HEAD:
 			break;
 		case OPTIONS:
@@ -75,6 +74,7 @@ public class RequestManager {
 	private <T> T makePostRequest(ApiMethod method) throws UnirestException {
 		
 		HttpRequestWithBody request = Unirest.post(method.getBaseUrl());
+		
 			
 		//Append each of the headers for the method
 		Iterator<HttpHeaderParameter> headerIterator = method.getHttpHeaderParameters().iterator();
@@ -86,9 +86,13 @@ public class RequestManager {
 				
 		//Append the request body
 		request.body(method.getUrlParametersAsPostBody());
-		
+				
 		//Make the request
 		HttpResponse<JsonNode> jsonResponse = request.asJson();
+		
+		System.out.println(jsonResponse.getStatusText());
+		
+		System.out.println(jsonResponse.getStatus());
 		
 		//Parse the response with Gson
 		Gson gson = new Gson();
@@ -106,10 +110,11 @@ public class RequestManager {
 	 * Method which uses OKHTTP to send a GET request to the specified URL saved
 	 * within the ApiMethod class 
 	 */
-	private <T> T makeGetRequest(ApiMethod method) {
+/*	private <T> T makeGetRequest(ApiMethod method) {
 	
 		
 	}
+*/
 	
 	
 

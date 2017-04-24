@@ -1,6 +1,5 @@
 package robinhood.api;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.mashape.unirest.http.exceptions.UnirestException;

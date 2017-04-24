@@ -10,7 +10,7 @@ public class AuthorizeWithoutMultifactor extends Authentication {
 	
 	public AuthorizeWithoutMultifactor(String username, String password) {
 		
-		setUrlBase("https://api.robinhood.com/api-token-auth");
+		setUrlBase("https://api.robinhood.com/api-token-auth/");
 		
 		//Add the parameters into the request
 		this.addUrlParameter(new UrlParameter("username", username));
@@ -18,6 +18,7 @@ public class AuthorizeWithoutMultifactor extends Authentication {
 		
 		//We're going to want a Json response
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "application/json"));
+		this.addHttpHeaderParameter(new HttpHeaderParameter("Content-Type", "application/x-www-form-urlencoded"));
 		
 		//This needs to be ran as POST
 		this.setMethod(RequestMethod.POST);
