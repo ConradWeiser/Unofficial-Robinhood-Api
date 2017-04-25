@@ -6,8 +6,10 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import robinhood.api.endpoint.account.data.AccountArrayWrapper;
 import robinhood.api.endpoint.account.data.AccountElement;
+import robinhood.api.endpoint.account.data.BasicAccountHolderInfoElement;
 import robinhood.api.endpoint.account.data.BasicUserInfoElement;
 import robinhood.api.endpoint.account.methods.GetAccounts;
+import robinhood.api.endpoint.account.methods.GetBasicAccountHolderInfo;
 import robinhood.api.endpoint.account.methods.GetBasicUserInfo;
 import robinhood.api.endpoint.authorize.data.Token;
 import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
@@ -160,6 +162,28 @@ public class RobinhoodApi {
 			
 			//Create the API method for the request
 			ApiMethod method = new GetBasicUserInfo();
+			method.addAuthTokenParameter();
+			
+			return requestManager.makeApiRequest(method);
+			
+		} catch (UnirestException ex) {
+			
+			//API error
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Method returning a {@link BasicAccountHolderInfoElement} for the currently logged in user
+	 * @throws TokenNotFoundException if the user is not logged in
+	 */
+	public BasicAccountHolderInfoElement getAccountHolderInfo() throws TokenNotFoundException {
+		
+		try {
+			
+			//Create the API method
+			ApiMethod method = new GetBasicAccountHolderInfo();
 			method.addAuthTokenParameter();
 			
 			return requestManager.makeApiRequest(method);
