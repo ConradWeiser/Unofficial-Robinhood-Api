@@ -10,8 +10,8 @@ import robinhood.api.endpoint.account.methods.GetAccounts;
 import robinhood.api.endpoint.authorize.data.Token;
 import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
-import robinhood.api.request.LogoutStatus;
 import robinhood.api.request.RequestManager;
+import robinhood.api.request.RequestStatus;
 import robinhood.api.throwables.TokenNotFoundException;
 
 public class RobinhoodApi {
@@ -58,22 +58,41 @@ public class RobinhoodApi {
 		RobinhoodApi.requestManager = RequestManager.getInstance();
 		RobinhoodApi.configManager = ConfigurationManager.getInstance();
 		
-		//TODO: Implement multifactor authorization
-		ApiMethod method = new AuthorizeWithoutMultifactor(username, password);
+		//Log the user in and store the auth token
+		this.logUserIn(username, password);
 		
-		try {
-			
-			Token token = requestManager.makeApiRequest(method);
-			
-			//Save the token into the configuration manager to be used with other methods
-			configManager.setAuthToken(token.getToken());
-			
-			
-		} catch (UnirestException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
+	
+	/**
+	 * Method which logs a user in given a username and password.
+	 * this method automatically stores the authorization token in with the instance,
+	 * allowing any method which requires the token to have immediate access to it.
+	 * 
+	 * This method is ran if you created the RobinhoodApi class using the constructor with 
+	 * both a username and password, but is available if you wish to get the authorization token again.
+	 * Usually ran after the user is logged out to refresh the otken
+	 */
+	public RequestStatus logUserIn(String username, String password) {
 		
+			
+			//TODO: Implement multifactor authorization
+			ApiMethod method = new AuthorizeWithoutMultifactor(username, password);
+			
+			try {
+				
+				Token token = requestManager.makeApiRequest(method);
+				
+				//Save the token into the configuration manager to be used with other methods
+				configManager.setAuthToken(token.getToken());
+				
+				return RequestStatus.SUCCESS;
+				
+				
+			} catch (UnirestException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return RequestStatus.FAILURE;
 	}
 	
 	/**
@@ -82,7 +101,7 @@ public class RobinhoodApi {
 	 * You should never see a "FAILURE" response from this. If so, file a bug report on github
 	 * @return an enum containing either "SUCCESS", "FAILURE" or "NOT_LOGGED_IN"
 	 */
-	public LogoutStatus logUserOut() {
+	public RequestStatus logUserOut() {
 		
 		try {
 					
@@ -92,16 +111,16 @@ public class RobinhoodApi {
 			requestManager.makeApiRequest(method);
 						
 			//If we made it to this point without throwing something, it worked!
-			return LogoutStatus.SUCCESS;
+			return RequestStatus.SUCCESS;
 			
 		} catch (TokenNotFoundException ex) {
 			
 			//If there was no token in the configManager, the user was never logged in
-			return LogoutStatus.NOT_LOGGED_IN;
+			return RequestStatus.NOT_LOGGED_IN;
 		} catch (UnirestException e) {
 			
 			//API error.
-			return LogoutStatus.FAILURE;
+			return RequestStatus.FAILURE;
 		}
 		
 	}

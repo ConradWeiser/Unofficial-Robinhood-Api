@@ -1,6 +1,6 @@
 package robinhood.api.request;
 
-public enum LogoutStatus {
+public enum RequestStatus {
 	
 	SUCCESS,
 	FAILURE,
