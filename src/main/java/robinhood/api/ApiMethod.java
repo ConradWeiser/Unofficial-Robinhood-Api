@@ -77,7 +77,7 @@ public abstract class ApiMethod {
 	 * @throws TokenNotFoundException if the token does not exist. If the user is not logged in.
 	 */
 	protected void addAuthTokenParameter() throws TokenNotFoundException {
-		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", manager.getToken()));
+		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", "Token " + manager.getToken()));
 	}
 	
 	/**

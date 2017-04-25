@@ -46,7 +46,7 @@ public class ConfigurationManager {
 	 * first.
 	 * 
 	 * @return the saved Token for the logged in user
-	 * @throws TokenNotFoundException
+	 * @throws TokenNotFoundException if there is no stored Token. This must be populated by the setToken() method first
 	 */
 	public String getToken() throws TokenNotFoundException {
 		
