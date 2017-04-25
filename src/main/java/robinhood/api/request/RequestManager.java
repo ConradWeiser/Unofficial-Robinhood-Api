@@ -7,6 +7,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 import robinhood.api.ApiMethod;
@@ -45,8 +46,8 @@ public class RequestManager {
 		switch(method.getMethod()) {
 		case DELETE:
 			break;
-//		case GET: response = this.makeGetRequest(method);
-//			break;
+		case GET: response = this.makeGetRequest(method);
+			break;
 		case HEAD:
 			break;
 		case OPTIONS:
@@ -71,6 +72,7 @@ public class RequestManager {
 	 * within the APIMethod class 
 	 * @throws UnirestException 
 	 */
+	@SuppressWarnings("unchecked")
 	private <T> T makePostRequest(ApiMethod method) throws UnirestException {
 		
 		HttpRequestWithBody request = Unirest.post(method.getBaseUrl());
@@ -89,11 +91,7 @@ public class RequestManager {
 				
 		//Make the request
 		HttpResponse<JsonNode> jsonResponse = request.asJson();
-		
-		System.out.println(jsonResponse.getStatusText());
-		
-		System.out.println(jsonResponse.getStatus());
-		
+				
 		//Parse the response with Gson
 		Gson gson = new Gson();
 		String responseJsonString = jsonResponse.getBody().toString();
@@ -112,14 +110,34 @@ public class RequestManager {
 	}
 	
 	/**
-	 * Method which uses OKHTTP to send a GET request to the specified URL saved
+	 * Method which uses Unirest to send a GET request to the specified URL saved
 	 * within the ApiMethod class 
+	 * @throws UnirestException 
 	 */
-/*	private <T> T makeGetRequest(ApiMethod method) {
+	private <T> T makeGetRequest(ApiMethod method) throws UnirestException {
 	
+		GetRequest request = Unirest.get(method.getBaseUrl());
+
+		//Append each of the headers for the method
+		Iterator<HttpHeaderParameter> headerIterator = method.getHttpHeaderParameters().iterator();
+		while(headerIterator.hasNext()) {
+			
+			HttpHeaderParameter currentHeader = headerIterator.next();
+			request.header(currentHeader.getKey(), currentHeader.getValue());
+		}
+		
+		//Make the request
+		HttpResponse<JsonNode> jsonResponse = request.asJson();
+				
+		//Parse the response with Gson
+		Gson gson = new Gson();
+		String responseJsonString = jsonResponse.getBody().toString();
+				
+		T data = gson.fromJson(responseJsonString,  method.getReturnType());
+		return data;
 		
 	}
-*/
+
 	
 	
 

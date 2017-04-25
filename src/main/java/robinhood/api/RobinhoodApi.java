@@ -4,6 +4,9 @@ import java.util.logging.Logger;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import robinhood.api.endpoint.account.data.AccountArrayWrapper;
+import robinhood.api.endpoint.account.data.AccountElement;
+import robinhood.api.endpoint.account.methods.GetAccounts;
 import robinhood.api.endpoint.authorize.data.Token;
 import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
@@ -101,6 +104,29 @@ public class RobinhoodApi {
 			return LogoutStatus.FAILURE;
 		}
 		
+	}
+	
+	/**
+	 * Method returning a {@link AccountElement} using the currently logged in user
+	 * @throws TokenNotFoundException if the user is not logged in
+	 */
+	public AccountElement getAccountData() throws TokenNotFoundException {
+		
+		try {
+			
+			//Create the API method for this request
+			ApiMethod method = new GetAccounts();
+			method.addAuthTokenParameter();
+			
+			//TODO: This is a temporary fix, as the Robinhood API seems to have some features planned, without being implemented fully
+			AccountArrayWrapper data = requestManager.makeApiRequest(method);
+			return data.getResults();
+		} catch(UnirestException ex) {
+			
+			//API error
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	
 
