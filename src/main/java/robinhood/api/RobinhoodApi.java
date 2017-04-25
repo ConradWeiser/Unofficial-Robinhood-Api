@@ -6,8 +6,10 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import robinhood.api.endpoint.account.data.AccountArrayWrapper;
 import robinhood.api.endpoint.account.data.AccountElement;
+import robinhood.api.endpoint.account.data.AccountHolderAffiliationElement;
 import robinhood.api.endpoint.account.data.BasicAccountHolderInfoElement;
 import robinhood.api.endpoint.account.data.BasicUserInfoElement;
+import robinhood.api.endpoint.account.methods.GetAccountHolderAffiliationInfo;
 import robinhood.api.endpoint.account.methods.GetAccounts;
 import robinhood.api.endpoint.account.methods.GetBasicAccountHolderInfo;
 import robinhood.api.endpoint.account.methods.GetBasicUserInfo;
@@ -191,6 +193,28 @@ public class RobinhoodApi {
 		} catch (UnirestException ex) {
 			
 			//API error
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Method returning a {@link AccountHolderAffiliationElement} for the currently loggedin user
+	 * @throws TokenNotFoundException if the user is not logged in
+	 */
+	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws TokenNotFoundException {
+		
+		try {
+			
+			//Create the API method
+			ApiMethod method = new GetAccountHolderAffiliationInfo();
+			method.addAuthTokenParameter();
+			
+			return requestManager.makeApiRequest(method);
+			
+		} catch (UnirestException ex) {
+			
+			//APi error
 			ex.printStackTrace();
 		}
 		return null;
