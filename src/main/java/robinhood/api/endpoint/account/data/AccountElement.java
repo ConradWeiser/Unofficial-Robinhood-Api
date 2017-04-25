@@ -44,7 +44,7 @@ public class AccountElement {
 	/**
 	 * @return the margin_balances
 	 */
-	public MarginBalanceElement getMargin_balances() {
+	public MarginBalanceElement getMarginBalances() {
 		return margin_balances;
 	}
 	/**
@@ -56,19 +56,19 @@ public class AccountElement {
 	/**
 	 * @return the cash_balances
 	 */
-	public CashBalancesElement getCash_balances() {
+	public CashBalancesElement getCashBalances() {
 		return cash_balances;
 	}
 	/**
 	 * @return the withdrawl_halted
 	 */
-	public boolean isWithdrawl_halted() {
+	public boolean isWithdrawlHalted() {
 		return withdrawl_halted;
 	}
 	/**
 	 * @return the cash_available_for_withdrawl
 	 */
-	public float getCash_available_for_withdrawl() {
+	public float getCashAvailableForWithdrawl() {
 		return cash_available_for_withdrawl;
 	}
 	/**
@@ -86,19 +86,19 @@ public class AccountElement {
 	/**
 	 * @return the sweep_enabled
 	 */
-	public boolean isSweep_enabled() {
+	public boolean isSweepEnabled() {
 		return sweep_enabled;
 	}
 	/**
 	 * @return the deposit_halted
 	 */
-	public boolean isDeposit_halted() {
+	public boolean isDepositHalted() {
 		return deposit_halted;
 	}
 	/**
 	 * @return the buying_power
 	 */
-	public float getBuying_power() {
+	public float getBuyingPower() {
 		return buying_power;
 	}
 	/**
@@ -110,19 +110,19 @@ public class AccountElement {
 	/**
 	 * @return the max_ach_early_access_amount
 	 */
-	public float getMax_ach_early_access_amount() {
+	public float getMaxAchEarlyAccessAmount() {
 		return max_ach_early_access_amount;
 	}
 	/**
 	 * @return the cash_held_for_orders
 	 */
-	public float getCash_held_for_orders() {
+	public float getCashHeldForOrders() {
 		return cash_held_for_orders;
 	}
 	/**
 	 * @return the only_position_closing_trades
 	 */
-	public boolean isOnly_position_closing_trades() {
+	public boolean isOnlyPositionClosingTrades() {
 		return only_position_closing_trades;
 	}
 	/**
@@ -146,25 +146,25 @@ public class AccountElement {
 	/**
 	 * @return the sma_held_for_orders
 	 */
-	public float getSma_held_for_orders() {
+	public float getSmaHeldForOrders() {
 		return sma_held_for_orders;
 	}
 	/**
 	 * @return the account_number
 	 */
-	public String getAccount_number() {
+	public String getAccountNumber() {
 		return account_number;
 	}
 	/**
 	 * @return the uncleared_deposits
 	 */
-	public float getUncleared_deposits() {
+	public float getUnclearedDeposits() {
 		return uncleared_deposits;
 	}
 	/**
 	 * @return the unsettled_funds
 	 */
-	public float getUnsettled_funds() {
+	public float getUnsettledFunds() {
 		return unsettled_funds;
 	}
 
