@@ -9,7 +9,7 @@ import java.util.List;
 import robinhood.api.parameters.HttpHeaderParameter;
 import robinhood.api.parameters.UrlParameter;
 import robinhood.api.request.RequestMethod;
-import robinhood.api.throwables.TokenNotFoundException;
+import robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 public abstract class ApiMethod {
 	
@@ -74,9 +74,9 @@ public abstract class ApiMethod {
 	
 	/**
 	 * Method which adds the Authorization Token to the HTTP request header
-	 * @throws TokenNotFoundException if the token does not exist. If the user is not logged in.
+	 * @throws RobinhoodNotLoggedInException if the token does not exist. If the user is not logged in.
 	 */
-	protected void addAuthTokenParameter() throws TokenNotFoundException {
+	protected void addAuthTokenParameter() throws RobinhoodNotLoggedInException {
 		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", "Token " + manager.getToken()));
 	}
 	

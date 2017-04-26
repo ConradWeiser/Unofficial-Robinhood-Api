@@ -1,6 +1,6 @@
 package robinhood.api;
 
-import robinhood.api.throwables.TokenNotFoundException;
+import robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 /**
  * Method which stores the current configuration for the library.
@@ -16,6 +16,11 @@ public class ConfigurationManager {
 	 * The authentication token for the logged in user, if one exists
 	 */
 	private String authToken = null;
+	
+	/**
+	 * The Account Number for the account logged in. This variable is used for various other functions.
+	 */
+	private String accountNumber = null;
 	
 	/**
 	 * The current ratelimit. How long should the system wait between requests?
@@ -46,12 +51,12 @@ public class ConfigurationManager {
 	 * first.
 	 * 
 	 * @return the saved Token for the logged in user
-	 * @throws TokenNotFoundException if there is no stored Token. This must be populated by the setToken() method first
+	 * @throws RobinhoodNotLoggedInException if there is no stored Token. This must be populated by the setToken() method first
 	 */
-	public String getToken() throws TokenNotFoundException {
+	public String getToken() throws RobinhoodNotLoggedInException {
 		
 		if(authToken == null)
-			throw new TokenNotFoundException();
+			throw new RobinhoodNotLoggedInException();
 		
 		return this.authToken;
 	}
@@ -81,6 +86,14 @@ public class ConfigurationManager {
 	public void setRatelimit(int newRateLimitValue) {
 		
 		this.rateLimitValue = newRateLimitValue;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 	
 	

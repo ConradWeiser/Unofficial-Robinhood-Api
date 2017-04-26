@@ -1,7 +1,7 @@
 package robinhood.api.throwables;
 
 @SuppressWarnings("serial")
-public class TokenNotFoundException extends Exception {
+public class RobinhoodNotLoggedInException extends Exception {
 	
 	/**
 	 * Override the default method to get more information about

@@ -24,7 +24,8 @@ import robinhood.api.endpoint.fundamentals.data.TickerFundamentalElement;
 import robinhood.api.endpoint.fundamentals.methods.GetTickerFundamental;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
-import robinhood.api.throwables.TokenNotFoundException;
+import robinhood.api.throwables.RobinhoodApiException;
+import robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 public class RobinhoodApi {
 	
@@ -63,8 +64,9 @@ public class RobinhoodApi {
 	 * the user. On success, the Authorization Token will be stored in the 
 	 * ConfigurationManager instance to be retrieved elsewhere.
 	 * On failure, an error will be thrown.
+	 * @throws RobinhoodApiException 
 	 */
-	public RobinhoodApi(String username, String password) {
+	public RobinhoodApi(String username, String password) throws RobinhoodApiException {
 		
 		//Construct the managers
 		RobinhoodApi.requestManager = RequestManager.getInstance();
@@ -83,8 +85,11 @@ public class RobinhoodApi {
 	 * This method is ran if you created the RobinhoodApi class using the constructor with 
 	 * both a username and password, but is available if you wish to get the authorization token again.
 	 * Usually ran after the user is logged out to refresh the otken
+	 * 
+	 * @throws Exception if the API could not retrieve an account number for your account. You should never see this,
+	 * 
 	 */
-	public RequestStatus logUserIn(String username, String password) {
+	public RequestStatus logUserIn(String username, String password) throws RobinhoodApiException {
 		
 			
 			//TODO: Implement multifactor authorization
@@ -97,12 +102,30 @@ public class RobinhoodApi {
 				//Save the token into the configuration manager to be used with other methods
 				configManager.setAuthToken(token.getToken());
 				
+				//Save the account number into the configuraiton manager to be used with other methods
+				ApiMethod accountMethod = new GetAccounts();
+				accountMethod.addAuthTokenParameter();
+				//TODO: Clean up the following line, it should not have to use the array wrapper. Tuck that code elsewhere
+				AccountArrayWrapper requestData = requestManager.makeApiRequest(accountMethod);
+				AccountElement data = requestData.getResults();
+				
+				//If there is no account number, something went wrong. Throw an exception
+				//TODO: Make this more graceful
+				if(data.getAccountNumber() == null) 
+					throw new RobinhoodApiException("Failed to get account data for the account.");
+				
+				System.out.println(data.getAccountNumber());
+				
+				configManager.setAccountNumber(data.getAccountNumber());
+				
 				return RequestStatus.SUCCESS;
 				
 				
 			} catch (UnirestException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (RobinhoodNotLoggedInException e) {
+				System.out.println("[Error] User is not logged in. You should never see this error. File a bug report if you do!");
 			}
 			return RequestStatus.FAILURE;
 	}
@@ -125,7 +148,7 @@ public class RobinhoodApi {
 			//If we made it to this point without throwing something, it worked!
 			return RequestStatus.SUCCESS;
 			
-		} catch (TokenNotFoundException ex) {
+		} catch (RobinhoodNotLoggedInException ex) {
 			
 			//If there was no token in the configManager, the user was never logged in
 			return RequestStatus.NOT_LOGGED_IN;
@@ -139,9 +162,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link AccountElement} using the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountElement getAccountData() throws TokenNotFoundException {
+	public AccountElement getAccountData() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
@@ -162,9 +185,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link BasicUserInfoElement} for the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public BasicUserInfoElement getBasicUserInfo() throws TokenNotFoundException {
+	public BasicUserInfoElement getBasicUserInfo() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
@@ -184,9 +207,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link BasicAccountHolderInfoElement} for the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public BasicAccountHolderInfoElement getAccountHolderInfo() throws TokenNotFoundException {
+	public BasicAccountHolderInfoElement getAccountHolderInfo() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
@@ -206,9 +229,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link AccountHolderAffiliationElement} for the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws TokenNotFoundException {
+	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
@@ -228,9 +251,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link AccountHolderEmploymentElement} for the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderEmploymentElement getAccountHolderEmployment() throws TokenNotFoundException {
+	public AccountHolderEmploymentElement getAccountHolderEmployment() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
@@ -250,9 +273,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method returning a {@link AccountHolderInvestmentElement} for the currently logged in user
-	 * @throws TokenNotFoundException if the user is not logged in
+	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderInvestmentElement getAccountHolderInvestment() throws TokenNotFoundException {
+	public AccountHolderInvestmentElement getAccountHolderInvestment() throws RobinhoodNotLoggedInException {
 		
 		try {
 			
