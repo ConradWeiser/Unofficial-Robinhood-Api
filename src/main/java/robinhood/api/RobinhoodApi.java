@@ -20,6 +20,8 @@ import robinhood.api.endpoint.account.methods.GetBasicUserInfo;
 import robinhood.api.endpoint.authorize.data.Token;
 import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
+import robinhood.api.endpoint.fundamentals.data.TickerFundamentalElement;
+import robinhood.api.endpoint.fundamentals.methods.GetTickerFundamental;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
 import robinhood.api.throwables.TokenNotFoundException;
@@ -267,6 +269,24 @@ public class RobinhoodApi {
 		}
 		return null;
 	}
+	
+	/**
+	 * Method returning a {@link TickerFundamentalElement} for the supplied ticker name
+	 */
+	public TickerFundamentalElement getTickerFundamental(String ticker) {
+		
+		try {
+			
+			//Create the API method
+			ApiMethod method = new GetTickerFundamental(ticker);
+			return requestManager.makeApiRequest(method);
+		} catch (UnirestException ex) {
+			
+			//Api error
+			ex.printStackTrace();
+		}
+		return null;
+	} 
 	
 
 	
