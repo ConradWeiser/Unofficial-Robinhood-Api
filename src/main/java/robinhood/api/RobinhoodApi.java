@@ -8,10 +8,12 @@ import robinhood.api.endpoint.account.data.AccountArrayWrapper;
 import robinhood.api.endpoint.account.data.AccountElement;
 import robinhood.api.endpoint.account.data.AccountHolderAffiliationElement;
 import robinhood.api.endpoint.account.data.AccountHolderEmploymentElement;
+import robinhood.api.endpoint.account.data.AccountHolderInvestmentElement;
 import robinhood.api.endpoint.account.data.BasicAccountHolderInfoElement;
 import robinhood.api.endpoint.account.data.BasicUserInfoElement;
 import robinhood.api.endpoint.account.methods.GetAccountHolderAffiliationInfo;
 import robinhood.api.endpoint.account.methods.GetAccountHolderEmploymentInfo;
+import robinhood.api.endpoint.account.methods.GetAccountHolderInvestmentInfo;
 import robinhood.api.endpoint.account.methods.GetAccounts;
 import robinhood.api.endpoint.account.methods.GetBasicAccountHolderInfo;
 import robinhood.api.endpoint.account.methods.GetBasicUserInfo;
@@ -232,6 +234,28 @@ public class RobinhoodApi {
 			
 			//Create the API method
 			ApiMethod method = new GetAccountHolderEmploymentInfo();
+			method.addAuthTokenParameter();
+			
+			return requestManager.makeApiRequest(method);
+			
+		} catch (UnirestException ex) {
+			
+			//Api error
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Method returning a {@link AccountHolderInvestmentElement} for the currently logged in user
+	 * @throws TokenNotFoundException if the user is not logged in
+	 */
+	public AccountHolderInvestmentElement getAccountHolderInvestment() throws TokenNotFoundException {
+		
+		try {
+			
+			//Create the API method
+			ApiMethod method = new GetAccountHolderInvestmentInfo();
 			method.addAuthTokenParameter();
 			
 			return requestManager.makeApiRequest(method);
