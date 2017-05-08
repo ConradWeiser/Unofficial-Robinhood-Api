@@ -22,6 +22,11 @@ import robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
 import robinhood.api.endpoint.fundamentals.data.TickerFundamentalElement;
 import robinhood.api.endpoint.fundamentals.methods.GetTickerFundamental;
+import robinhood.api.endpoint.orders.data.SecurityOrderElement;
+import robinhood.api.endpoint.orders.enums.OrderTransactionType;
+import robinhood.api.endpoint.orders.enums.TimeInForce;
+import robinhood.api.endpoint.orders.methods.MakeLimitOrder;
+import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
 import robinhood.api.throwables.RobinhoodApiException;
@@ -310,6 +315,35 @@ public class RobinhoodApi {
 		}
 		return null;
 	} 
+	
+	/**
+	 * Method which returns a {@link SecurityOrderElement} after running a LIMIT order 
+	 * given the supplied parameters.
+	 * @param ticker The ticker which the buy or sell order should be performed on
+	 * @param timeInForce The Enum representation for when this order should be made
+	 * @param limitPrice The price you're willing to accept in a sell, or pay in a buy
+	 * @param quantity The number of shares you would like to buy or sell
+	 * @param orderType Which type of order is being made. A buy, or sell.
+	 * @throws InvalidTickerException Thrown when the ticker supplied to the method is invalid.
+	 * @throws RobinhoodNotLoggedInException  Thrown when this Robinhood Api instance is not logged into an account. Run the login method first.
+	 */
+	public SecurityOrderElement makeLimitOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType) throws InvalidTickerException, RobinhoodNotLoggedInException {
+		
+		try {
+			
+			//Create the API method
+			ApiMethod method = new MakeLimitOrder(ticker, timeInForce, limitPrice, quantity, orderType);
+			method.addAuthTokenParameter();
+			
+			return requestManager.makeApiRequest(method);
+			
+		} catch (UnirestException ex) {
+			
+			//Api error
+			ex.printStackTrace();
+		}
+		return null;
+	}
 	
 
 	
