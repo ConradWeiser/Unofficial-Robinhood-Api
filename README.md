@@ -2,6 +2,9 @@
 
 # Unofficial Robinhood Api (Java Wrapper)
 
+# --NOTE: This library is still in it's alpha stages, please do not use it until this tag is removed--
+More documentation and features to come. I discourage using the library until javadocs are created, and some internal workings are revised.
+
 A Java wrapper providing easy access to the [Unofficial Robinhood Api](https://github.com/sanko/Robinhood).
 
 Currently Implemented:
