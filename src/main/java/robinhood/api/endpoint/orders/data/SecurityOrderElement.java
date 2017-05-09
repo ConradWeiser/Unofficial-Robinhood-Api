@@ -121,7 +121,7 @@ public class SecurityOrderElement {
 	/**
 	 * @return the state as an ENUM value representing each possible response. See {@link OrderState}
 	 */
-	public OrderState getState() {
+	public OrderState getTransactionState() {
 	
 		switch(this.state) {
 		
@@ -137,6 +137,14 @@ public class SecurityOrderElement {
 		
 		}
 		
+	}
+	
+	/**
+	 * @return the state of the transaction as a readable string.
+	 */
+	public String getTransactionStateAsString() {
+		
+		return this.state;
 	}
 
 	/**

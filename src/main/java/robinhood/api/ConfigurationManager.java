@@ -23,6 +23,12 @@ public class ConfigurationManager {
 	private String accountNumber = null;
 	
 	/**
+	 * The Account URL for the account logged in. This variable is required to run a lot of the 
+	 * order requests.
+	 */
+	private String accountUrl = null;
+	
+	/**
 	 * The current ratelimit. How long should the system wait between requests?
 	 */
 	private long rateLimitValue = 2000;
@@ -95,6 +101,16 @@ public class ConfigurationManager {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+
+	/**
+	 * Method returning the Account URL for the logged in user. This is created by appending the account number
+	 * to a base URL. This is valid in most order requests
+	 * @return the account URL
+	 */
+	public String getAccountUrl() {
+		return "https://api.robinhood.com/accounts/" + this.accountNumber + "/";
+	}
+
 	
 	
 
