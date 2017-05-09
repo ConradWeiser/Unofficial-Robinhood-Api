@@ -64,7 +64,7 @@ try {
 ## Disclaimer
 I have never taken up a project working with APIs like this. I intend to write this wrapper to the best of my ability, and continue to give support/make changes as time passes.
 
-I however am a student, and have never programmed in a professional enviroment. Things might seem a little messy until the library gets a little closer to completion. I am mostly self taught, and cannot promise that the best techniques are used in the libraries code.
+I however am a student, and have never programmed in a professional enviroment. Things might seem a little messy until the library gets a little closer to completion.
 
 However, that being said, I aim to make the finished project both efficient in terms of how much computing power it requires, and easy for other developers to build functionality on top of. Stay tuned for future updates!
 ____
