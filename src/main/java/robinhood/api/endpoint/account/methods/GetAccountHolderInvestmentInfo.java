@@ -1,5 +1,6 @@
 package robinhood.api.endpoint.account.methods;
 
+import robinhood.api.ConfigurationManager;
 import robinhood.api.endpoint.account.Account;
 import robinhood.api.endpoint.account.data.AccountHolderInvestmentElement;
 import robinhood.api.parameters.HttpHeaderParameter;
@@ -9,7 +10,7 @@ public class GetAccountHolderInvestmentInfo extends Account {
 	
 	public GetAccountHolderInvestmentInfo() {
 		
-		this.setUrlBase("https://api.robinhood.com/user/investment_profile");
+		this.setUrlBase("https://api.robinhood.com/accounts" + ConfigurationManager.getInstance().getAccountNumber() + "/positions/");
 		
 		//Add the headers into the request
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "application/json"));

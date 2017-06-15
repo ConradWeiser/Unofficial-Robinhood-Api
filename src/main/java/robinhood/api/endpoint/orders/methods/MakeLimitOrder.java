@@ -105,7 +105,6 @@ public class MakeLimitOrder extends Orders {
 	private void setOrderParameters() {
 		
 		//Add the account URL for the currently logged in account
-		System.out.println(ConfigurationManager.getInstance().getAccountUrl());
 		this.addUrlParameter(new UrlParameter("account", ConfigurationManager.getInstance().getAccountUrl()));
 		this.addUrlParameter(new UrlParameter("instrument", this.tickerInstrumentUrl));
 		this.addUrlParameter(new UrlParameter("symbol", this.ticker));

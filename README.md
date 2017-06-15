@@ -12,8 +12,9 @@ Currently Implemented:
 * Logging users in and out
 * Get account information - [Click me for response contents](https://github.com/sanko/Robinhood/blob/master/Account.md#gather-list-of-accounts)
 * Getting information about tickers
-* Making Limit orders
-* More to come
+* Making orders
+* Making limit + limit stop orders
+* 
 
 
 ## Installation

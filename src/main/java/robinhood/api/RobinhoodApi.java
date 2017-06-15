@@ -83,6 +83,25 @@ public class RobinhoodApi {
 	}
 	
 	/**
+	 * Method which returns the authentication for the logged in user, if one exists.
+	 * @throws RobinhoodNotLoggedInException 
+	 */
+	public String getAccountAuthToken() throws RobinhoodNotLoggedInException {
+		
+		return configManager.getToken();
+	}
+	
+	/**
+	 * Method allowing a user to input a token without logging in.
+	 * It is not suggested you use this.
+	 */
+	@Deprecated
+	public void setAuthToken(String token) {
+		
+		configManager.setAuthToken(token);
+	}
+	
+	/**
 	 * Method which logs a user in given a username and password.
 	 * this method automatically stores the authorization token in with the instance,
 	 * allowing any method which requires the token to have immediate access to it.
@@ -118,9 +137,7 @@ public class RobinhoodApi {
 				//TODO: Make this more graceful
 				if(data.getAccountNumber() == null) 
 					throw new RobinhoodApiException("Failed to get account data for the account.");
-				
-				System.out.println(data.getAccountNumber());
-				
+
 				configManager.setAccountNumber(data.getAccountNumber());
 				
 				return RequestStatus.SUCCESS;

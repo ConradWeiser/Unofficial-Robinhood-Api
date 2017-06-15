@@ -128,7 +128,7 @@ public class RequestManager {
 		
 		//Make the request
 		HttpResponse<JsonNode> jsonResponse = request.asJson();
-				
+
 		//Parse the response with Gson
 		Gson gson = new Gson();
 		String responseJsonString = jsonResponse.getBody().toString();
