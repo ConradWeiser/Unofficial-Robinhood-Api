@@ -14,7 +14,8 @@ Currently Implemented:
 * Getting information about tickers
 * Making orders
 * Making limit + limit stop orders
-* 
+* Get holdings user is currently invested in
+* More to come
 
 
 ## Installation
@@ -46,20 +47,13 @@ try {
     //Print to console!
     System.out.println(accountNumber + " : " + String.valueOf(buyingPower));
    
-   } catch (UnirestException ex) {
-   
-   	//There was a error communicating with the API. Do error handling here.
-    //Hopefully this never should be reached. File a bug report if you ever catch this!
- 	ex.printStackTrace();
-    
-}
 ```
 
 ## Things to do
 
 * Generate legitimate javadocs once the library is far enough along and include them in this readme
 * Include a more comprehensive guide on what data you are getting from each method (Probably within the javadocs)
-* Continue implementing more of the available methods we have available
+* Continue implementing more of the working methods we have available
 * Streamline the library framework in general. Currently things work very well, but it's not perfect
 * Update this Readme so it's more pretty, and has more information. Consider this a v-0.1 as I continue to write the library
 
