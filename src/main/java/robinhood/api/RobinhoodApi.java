@@ -26,6 +26,7 @@ import robinhood.api.endpoint.orders.data.SecurityOrderElement;
 import robinhood.api.endpoint.orders.enums.OrderTransactionType;
 import robinhood.api.endpoint.orders.enums.TimeInForce;
 import robinhood.api.endpoint.orders.methods.MakeLimitOrder;
+import robinhood.api.endpoint.orders.methods.MakeMarketOrder;
 import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
@@ -359,6 +360,35 @@ public class RobinhoodApi {
 			//Api error
 			ex.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 *
+	 * @param ticker What ticker you are performing this order on
+	 * @param quantity How many shares should be transacted
+	 * @param orderType Which type of order is being made. A buy, or a sell.
+	 * @param time The Enum representation of when this order should be made.
+	 * @return The SecurityOrderElement object with the API response.
+	 * @throws InvalidTickerException if the ticker supplied was invalid
+	 * @throws RobinhoodNotLoggedInException if you are not logged into Robinhood on this API object
+	 */
+	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodNotLoggedInException {
+
+		try {
+
+			//Create the API method
+			ApiMethod method = new MakeMarketOrder(ticker, quantity, orderType, time);
+			method.addAuthTokenParameter();
+
+			return requestManager.makeApiRequest(method);
+
+		} catch (UnirestException ex) {
+
+			//Api error
+			ex.printStackTrace();
+		}
+
 		return null;
 	}
 	
