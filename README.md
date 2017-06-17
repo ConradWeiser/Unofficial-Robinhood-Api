@@ -27,6 +27,7 @@ Will be done through Maven/Gradle, although I may make some compiled .JAR files 
 
 ## Usage
 
+###[Javadocs available - Click me!](https://conradweiser.github.io/Unofficial-Robinhood-Api/)
 This library is built with the intention of making extracting information from the Robinhood API as easy as possible. 
 
 Say for the following example, we want to get our account number, and how much buying power we have available
@@ -51,7 +52,6 @@ try {
 
 ## Things to do
 
-* Generate legitimate javadocs once the library is far enough along and include them in this readme
 * Include a more comprehensive guide on what data you are getting from each method (Probably within the javadocs)
 * Continue implementing more of the working methods we have available
 * Streamline the library framework in general. Currently things work very well, but it's not perfect
