@@ -2,7 +2,7 @@
 
 # Unofficial Robinhood Api (Java Wrapper)
 
-# --NOTE: This library is still in it's alpha stages, please do not use it until this tag is removed--
+# --NOTE: This library is still in it's alpha stages--
 More documentation and features to come. I discourage using the library until javadocs are created, and some internal workings are revised.
 
 A Java wrapper providing easy access to the [Unofficial Robinhood Api](https://github.com/sanko/Robinhood).
@@ -27,27 +27,24 @@ Will be done through Maven/Gradle, although I may make some compiled .JAR files 
 
 ## Usage
 
-###[Javadocs available - Click me!](https://conradweiser.github.io/Unofficial-Robinhood-Api/)
+[Javadocs available - Click me!](https://conradweiser.github.io/Unofficial-Robinhood-Api/)
 This library is built with the intention of making extracting information from the Robinhood API as easy as possible. 
 
 Say for the following example, we want to get our account number, and how much buying power we have available
 
 ```
-try {
-
-	//Providing a username and password automatically logs the instance into our account!
-	RobinhoodApi api = new RobinhoodApi("username", "password");
+//Providing a username and password automatically logs the instance into our account!
+RobinhoodApi api = new RobinhoodApi("username", "password");
     
-    //Make the request for all of the account information
-   	AccountElement accountData = api.getAccountData();
+//Make the request for all of the account information
+AccountElement accountData = api.getAccountData();
     
-    //Extract the data we want
-    String accountNumber = accountData.getAccountNumber();
-    Float buyingPower = accountData.getBuyingPower();
+//Extract the data we want
+String accountNumber = accountData.getAccountNumber();
+Float buyingPower = accountData.getBuyingPower();
     
-    //Print to console!
-    System.out.println(accountNumber + " : " + String.valueOf(buyingPower));
-   
+//Print to console!
+System.out.println(accountNumber + " : " + String.valueOf(buyingPower));
 ```
 
 ## Things to do
