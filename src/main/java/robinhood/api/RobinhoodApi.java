@@ -26,7 +26,9 @@ import robinhood.api.endpoint.orders.data.SecurityOrderElement;
 import robinhood.api.endpoint.orders.enums.OrderTransactionType;
 import robinhood.api.endpoint.orders.enums.TimeInForce;
 import robinhood.api.endpoint.orders.methods.MakeLimitOrder;
+import robinhood.api.endpoint.orders.methods.MakeLimitStopOrder;
 import robinhood.api.endpoint.orders.methods.MakeMarketOrder;
+import robinhood.api.endpoint.orders.methods.MakeMarketStopOrder;
 import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
@@ -345,7 +347,7 @@ public class RobinhoodApi {
 	 * @throws InvalidTickerException Thrown when the ticker supplied to the method is invalid.
 	 * @throws RobinhoodNotLoggedInException  Thrown when this Robinhood Api instance is not logged into an account. Run the login method first.
 	 */
-	public SecurityOrderElement makeLimitOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType) throws InvalidTickerException, RobinhoodNotLoggedInException {
+	public SecurityOrderElement makeLimitOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -363,6 +365,38 @@ public class RobinhoodApi {
 		return null;
 	}
 
+    /**
+     * Method which returns a {@link SecurityOrderElement} after running a LIMIT STOP order given the supplied
+     * parameters
+     * @param ticker The ticker which the buy or sell order should be performed on
+     * @param timeInForce The Enum representation for when this order should be made
+     * @param limitPrice The price you're willing to accept in a sell, or pay in a buy
+     * @param quantity The number of shares you would like to buy or sell
+     * @param orderType Which type of order is being made. A buy, or a sell
+     * @param stopPrice The price at which the stop trigger converts the order into a market order
+     * @throws InvalidTickerException The ticker supplied is not valid.
+     * @throws RobinhoodApiException There is a general problem with the API.
+     * @throws RobinhoodNotLoggedInException Thrown when the current instance is not logged into an account. Run the login method first.
+     */
+	public SecurityOrderElement makeLimitStopOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) throws InvalidTickerException, RobinhoodApiException, RobinhoodNotLoggedInException {
+
+		try {
+
+			//Create the API method
+			ApiMethod method = new MakeLimitStopOrder(ticker, timeInForce, limitPrice, quantity, orderType, stopPrice);
+			method.addAuthTokenParameter();
+
+			return requestManager.makeApiRequest(method);
+
+		} catch (UnirestException ex) {
+
+		    //Api error
+            ex.printStackTrace();
+        }
+
+        return null;
+	}
+
 	/**
 	 *
 	 * @param ticker What ticker you are performing this order on
@@ -373,7 +407,7 @@ public class RobinhoodApi {
 	 * @throws InvalidTickerException if the ticker supplied was invalid
 	 * @throws RobinhoodNotLoggedInException if you are not logged into Robinhood on this API object
 	 */
-	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodNotLoggedInException {
+	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
 
 		try {
 
@@ -391,6 +425,24 @@ public class RobinhoodApi {
 
 		return null;
 	}
+
+	public SecurityOrderElement makeMarketStopOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time, float stopPrice) throws RobinhoodApiException, InvalidTickerException, RobinhoodNotLoggedInException {
+
+	    try {
+
+	        //Create the API method
+            ApiMethod method = new MakeMarketStopOrder(ticker, quantity, orderType, time, stopPrice);
+            method.addAuthTokenParameter();
+
+            return requestManager.makeApiRequest(method);
+        } catch (UnirestException ex) {
+
+	        //Api error
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 	
 
 	
