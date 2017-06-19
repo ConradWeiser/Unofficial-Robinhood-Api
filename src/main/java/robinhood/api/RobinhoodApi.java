@@ -30,6 +30,8 @@ import robinhood.api.endpoint.orders.methods.MakeLimitStopOrder;
 import robinhood.api.endpoint.orders.methods.MakeMarketOrder;
 import robinhood.api.endpoint.orders.methods.MakeMarketStopOrder;
 import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
+import robinhood.api.endpoint.quote.data.TickerQuoteElement;
+import robinhood.api.endpoint.quote.methods.GetTickerQuote;
 import robinhood.api.request.RequestManager;
 import robinhood.api.request.RequestStatus;
 import robinhood.api.throwables.RobinhoodApiException;
@@ -443,6 +445,29 @@ public class RobinhoodApi {
 
         return null;
     }
+
+	/**
+	 * Method returning a {@link TickerQuoteElement} for the supplied ticker. Contains general information, such as the
+	 * current asking price and the last trading price.
+	 * @param ticker Which symbol you are retrieving a quote for
+	 * @return
+	 */
+	public TickerQuoteElement getQuoteByTicker(String ticker) {
+
+		try {
+
+			//Create the API method
+			ApiMethod method = new GetTickerQuote(ticker);
+
+			return requestManager.makeApiRequest(method);
+
+		} catch (UnirestException ex) {
+
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
 	
 
 	
