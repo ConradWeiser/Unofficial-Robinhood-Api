@@ -124,7 +124,7 @@ public class Orders extends ApiMethod {
 	 *
 	 * @throws InvalidTickerException
 	 */
-	protected String verifyTickerData(String ticker) throws Exception {
+	protected String verifyTickerData(String ticker) throws RobinhoodApiException, InvalidTickerException {
 
 		//Make a Ticker Fundamental API request for the supplied ticker
 		RequestManager requestManager = RequestManager.getInstance();

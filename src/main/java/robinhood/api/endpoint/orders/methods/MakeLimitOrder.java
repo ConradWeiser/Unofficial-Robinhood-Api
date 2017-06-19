@@ -6,6 +6,7 @@ import robinhood.api.endpoint.orders.enums.OrderTransactionType;
 import robinhood.api.endpoint.orders.enums.TimeInForce;
 import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.parameters.UrlParameter;
+import robinhood.api.throwables.RobinhoodApiException;
 
 public class MakeLimitOrder extends Orders {
 	
@@ -17,7 +18,7 @@ public class MakeLimitOrder extends Orders {
 	
 	private String tickerInstrumentUrl = null;
 	
-	public MakeLimitOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType) throws InvalidTickerException {
+	public MakeLimitOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType) throws RobinhoodApiException, InvalidTickerException {
 		
 		this.ticker = ticker;
 		this.time = time;

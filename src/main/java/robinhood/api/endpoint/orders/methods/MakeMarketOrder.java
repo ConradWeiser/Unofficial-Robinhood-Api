@@ -6,6 +6,7 @@ import robinhood.api.endpoint.orders.enums.OrderTransactionType;
 import robinhood.api.endpoint.orders.enums.TimeInForce;
 import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.parameters.UrlParameter;
+import robinhood.api.throwables.RobinhoodApiException;
 
 /**
  * Created by SirensBell on 6/15/2017.
@@ -18,7 +19,7 @@ public class MakeMarketOrder extends Orders {
     private String tickerInstrumentUrl = "";
     private TimeInForce time = null;
 
-    public MakeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException {
+    public MakeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodApiException {
 
         this.ticker = ticker;
         this.quantity = quantity;
@@ -46,7 +47,7 @@ public class MakeMarketOrder extends Orders {
 
     /**
      * Method which sets the URLParameters for correctly so the order is ran as a
-     * Market Buy order, given the settings from the constructor
+     * Market order, given the settings from the constructor
      */
     private void setOrderParameters() {
 
@@ -58,7 +59,6 @@ public class MakeMarketOrder extends Orders {
         this.addUrlParameter(new UrlParameter("trigger", "immediate"));
         this.addUrlParameter(new UrlParameter("quantity", String.valueOf(this.quantity)));
         this.addUrlParameter(new UrlParameter("side", getOrderSideString(orderType)));
-
     }
 
 

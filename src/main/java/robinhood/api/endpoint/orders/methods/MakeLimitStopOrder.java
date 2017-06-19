@@ -9,6 +9,7 @@ import robinhood.api.endpoint.orders.throwables.InvalidTickerException;
 import robinhood.api.parameters.HttpHeaderParameter;
 import robinhood.api.parameters.UrlParameter;
 import robinhood.api.request.RequestMethod;
+import robinhood.api.throwables.RobinhoodApiException;
 
 /**
  * Created by SirensBell on 5/11/2017.
@@ -24,7 +25,7 @@ public class MakeLimitStopOrder extends Orders {
 
     private String tickerInstrumentUrl = null;
 
-    public MakeLimitStopOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) throws InvalidTickerException {
+    public MakeLimitStopOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) throws RobinhoodApiException, InvalidTickerException {
 
         this.ticker = ticker;
         this.time = time;
