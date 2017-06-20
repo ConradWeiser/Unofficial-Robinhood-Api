@@ -32,4 +32,5 @@ proguard/
 .gradletasknamecache
 .gradle/
 build/
-bin/
+
+/src/main/java/Test.java

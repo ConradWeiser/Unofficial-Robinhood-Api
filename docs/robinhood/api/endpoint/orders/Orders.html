@@ -74,7 +74,7 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.robinhood.api.ApiMethod">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.ApiMethod">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -99,10 +99,10 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../robinhood/api/ApiMethod.html" title="class in robinhood.api">robinhood.api.ApiMethod</a></li>
+<li><a href="../../../../robinhood/api/ApiMethod.html" title="class in robinhood.api">ApiMethod</a></li>
 <li>
 <ul class="inheritance">
-<li>robinhood.api.endpoint.orders.Orders</li>
+<li>Orders</li>
 </ul>
 </li>
 </ul>
@@ -132,7 +132,7 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.robinhood.api.ApiMethod">
+<li class="blockList"><a name="fields.inherited.from.class.ApiMethod">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;robinhood.api.<a href="../../../../robinhood/api/ApiMethod.html" title="class in robinhood.api">ApiMethod</a></h3>
@@ -173,13 +173,13 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../robinhood/api/endpoint/orders/Orders.html#getOrderSideString-robinhood.api.endpoint.orders.enums.OrderTransactionType-">getOrderSideString</a></span>(<a href="../../../../robinhood/api/endpoint/orders/enums/OrderTransactionType.html" title="enum in robinhood.api.endpoint.orders.enums">OrderTransactionType</a>&nbsp;type)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../robinhood/api/endpoint/orders/Orders.html#getOrderSideString-OrderTransactionType-">getOrderSideString</a></span>(<a href="../../../../robinhood/api/endpoint/orders/enums/OrderTransactionType.html" title="enum in robinhood.api.endpoint.orders.enums">OrderTransactionType</a>&nbsp;type)</code>
 <div class="block">Method which parses the Order Side enum value.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../robinhood/api/endpoint/orders/Orders.html#getTimeInForceString-robinhood.api.endpoint.orders.enums.TimeInForce-">getTimeInForceString</a></span>(<a href="../../../../robinhood/api/endpoint/orders/enums/TimeInForce.html" title="enum in robinhood.api.endpoint.orders.enums">TimeInForce</a>&nbsp;time)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../robinhood/api/endpoint/orders/Orders.html#getTimeInForceString-TimeInForce-">getTimeInForceString</a></span>(<a href="../../../../robinhood/api/endpoint/orders/enums/TimeInForce.html" title="enum in robinhood.api.endpoint.orders.enums">TimeInForce</a>&nbsp;time)</code>
 <div class="block">Method which parses the Time of Day enum variable and returns the simplified version which the API
  requires in order to make a request</div>
 </td>
@@ -206,11 +206,11 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.robinhood.api.ApiMethod">
+<li class="blockList"><a name="methods.inherited.from.class.ApiMethod">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;robinhood.api.<a href="../../../../robinhood/api/ApiMethod.html" title="class in robinhood.api">ApiMethod</a></h3>
-<code><a href="../../../../robinhood/api/ApiMethod.html#addAuthTokenParameter--">addAuthTokenParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#addHttpHeaderParameter-robinhood.api.parameters.HttpHeaderParameter-">addHttpHeaderParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#addUrlParameter-robinhood.api.parameters.UrlParameter-">addUrlParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#doesRequireToken--">doesRequireToken</a>, <a href="../../../../robinhood/api/ApiMethod.html#getBaseUrl--">getBaseUrl</a>, <a href="../../../../robinhood/api/ApiMethod.html#getBody--">getBody</a>, <a href="../../../../robinhood/api/ApiMethod.html#getHttpHeaderParameters--">getHttpHeaderParameters</a>, <a href="../../../../robinhood/api/ApiMethod.html#getMethod--">getMethod</a>, <a href="../../../../robinhood/api/ApiMethod.html#getReturnType--">getReturnType</a>, <a href="../../../../robinhood/api/ApiMethod.html#getUrl--">getUrl</a>, <a href="../../../../robinhood/api/ApiMethod.html#getUrlParametersAsPostBody--">getUrlParametersAsPostBody</a>, <a href="../../../../robinhood/api/ApiMethod.html#requireToken--">requireToken</a>, <a href="../../../../robinhood/api/ApiMethod.html#setMethod-robinhood.api.request.RequestMethod-">setMethod</a>, <a href="../../../../robinhood/api/ApiMethod.html#setReturnType-java.lang.reflect.Type-">setReturnType</a>, <a href="../../../../robinhood/api/ApiMethod.html#setUrlBase-java.lang.String-">setUrlBase</a>, <a href="../../../../robinhood/api/ApiMethod.html#toString--">toString</a></code></li>
+<code><a href="../../../../robinhood/api/ApiMethod.html#addAuthTokenParameter--">addAuthTokenParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#addHttpHeaderParameter-HttpHeaderParameter-">addHttpHeaderParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#addUrlParameter-UrlParameter-">addUrlParameter</a>, <a href="../../../../robinhood/api/ApiMethod.html#doesRequireToken--">doesRequireToken</a>, <a href="../../../../robinhood/api/ApiMethod.html#getBaseUrl--">getBaseUrl</a>, <a href="../../../../robinhood/api/ApiMethod.html#getBody--">getBody</a>, <a href="../../../../robinhood/api/ApiMethod.html#getHttpHeaderParameters--">getHttpHeaderParameters</a>, <a href="../../../../robinhood/api/ApiMethod.html#getMethod--">getMethod</a>, <a href="../../../../robinhood/api/ApiMethod.html#getReturnType--">getReturnType</a>, <a href="../../../../robinhood/api/ApiMethod.html#getUrl--">getUrl</a>, <a href="../../../../robinhood/api/ApiMethod.html#getUrlParametersAsPostBody--">getUrlParametersAsPostBody</a>, <a href="../../../../robinhood/api/ApiMethod.html#requireToken--">requireToken</a>, <a href="../../../../robinhood/api/ApiMethod.html#setMethod-RequestMethod-">setMethod</a>, <a href="../../../../robinhood/api/ApiMethod.html#setReturnType-java.lang.reflect.Type-">setReturnType</a>, <a href="../../../../robinhood/api/ApiMethod.html#setUrlBase-java.lang.String-">setUrlBase</a>, <a href="../../../../robinhood/api/ApiMethod.html#toString--">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -261,7 +261,7 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
  This does not include the order data.</div>
 </li>
 </ul>
-<a name="getTimeInForceString-robinhood.api.endpoint.orders.enums.TimeInForce-">
+<a name="getTimeInForceString-TimeInForce-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -272,7 +272,7 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
  requires in order to make a request</div>
 </li>
 </ul>
-<a name="getOrderSideString-robinhood.api.endpoint.orders.enums.OrderTransactionType-">
+<a name="getOrderSideString-OrderTransactionType-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -376,7 +376,7 @@ extends <a href="../../../../robinhood/api/ApiMethod.html" title="class in robin
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.robinhood.api.ApiMethod">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.ApiMethod">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
