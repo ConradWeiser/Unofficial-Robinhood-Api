@@ -2,8 +2,7 @@
 
 # Unofficial Robinhood Api (Java Wrapper)
 
-# --NOTE: This library is still in it's alpha stages--
-More documentation and features to come. I discourage using the library until javadocs are created, and some internal workings are revised.
+More documentation and features to come. 
 
 A Java wrapper providing easy access to the [Unofficial Robinhood Api](https://github.com/sanko/Robinhood).
 
@@ -13,16 +12,15 @@ Currently Implemented:
 * Get account information - [Click me for response contents](https://github.com/sanko/Robinhood/blob/master/Account.md#gather-list-of-accounts)
 * Getting information about tickers
 * Making orders
-* Making limit + limit stop orders
 * Get holdings user is currently invested in
 * More to come
 
 
 ## Installation
 
-Coming very soon. (Within a week or so hopefully) 
+Include the latest .jar file from the [Release Page](https://github.com/ConradWeiser/Unofficial-Robinhood-Api/releases) in your system build path.
 
-Will be done through Maven/Gradle, although I may make some compiled .JAR files available as well.
+Maven/Gradle options will probably become available in the future
 
 
 ## Usage
