@@ -3,8 +3,7 @@ package robinhood.api.throwables;
 @SuppressWarnings("serial")
 public class RobinhoodApiException extends Exception {
 	
-	private String error = "A problem has occured within the Robinhood API library."
-			+ " Please consider filing a big report if the issue is not obvious!";
+	private String error = "A problem has occured within the Robinhood API library";
 	
 	public RobinhoodApiException() {
 		

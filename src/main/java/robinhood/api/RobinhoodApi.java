@@ -98,7 +98,9 @@ public class RobinhoodApi {
 	
 	/**
 	 * Method allowing a user to input a token without logging in.
-	 * It is not suggested you use this.
+	 * It is not suggested you use this unless you have a specific reason where you need to inject a auth token
+	 * into the instance, generally allowing the system to resolve this token with a username and password is more
+	 * 'secure'.
 	 */
 	@Deprecated
 	public void setAuthToken(String token) {
@@ -191,7 +193,7 @@ public class RobinhoodApi {
 	 * Method returning a {@link AccountElement} using the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountElement getAccountData() throws RobinhoodNotLoggedInException {
+	public AccountElement getAccountData() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -207,14 +209,14 @@ public class RobinhoodApi {
 			//API error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link BasicUserInfoElement} for the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public BasicUserInfoElement getBasicUserInfo() throws RobinhoodNotLoggedInException {
+	public BasicUserInfoElement getBasicUserInfo() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -229,14 +231,14 @@ public class RobinhoodApi {
 			//API error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link BasicAccountHolderInfoElement} for the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public BasicAccountHolderInfoElement getAccountHolderInfo() throws RobinhoodNotLoggedInException {
+	public BasicAccountHolderInfoElement getAccountHolderInfo() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -251,14 +253,14 @@ public class RobinhoodApi {
 			//API error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link AccountHolderAffiliationElement} for the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws RobinhoodNotLoggedInException {
+	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -273,14 +275,14 @@ public class RobinhoodApi {
 			//APi error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link AccountHolderEmploymentElement} for the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderEmploymentElement getAccountHolderEmployment() throws RobinhoodNotLoggedInException {
+	public AccountHolderEmploymentElement getAccountHolderEmployment() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -295,14 +297,14 @@ public class RobinhoodApi {
 			//Api error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link AccountHolderInvestmentElement} for the currently logged in user
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
-	public AccountHolderInvestmentElement getAccountHolderInvestment() throws RobinhoodNotLoggedInException {
+	public AccountHolderInvestmentElement getAccountHolderInvestment() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
 		try {
 			
@@ -317,13 +319,13 @@ public class RobinhoodApi {
 			//Api error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 	/**
 	 * Method returning a {@link TickerFundamentalElement} for the supplied ticker name
 	 */
-	public TickerFundamentalElement getTickerFundamental(String ticker) {
+	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException {
 		
 		try {
 			
@@ -335,7 +337,8 @@ public class RobinhoodApi {
 			//Api error
 			ex.printStackTrace();
 		}
-		return null;
+
+		throw new RobinhoodApiException();
 	} 
 	
 	/**
@@ -364,7 +367,7 @@ public class RobinhoodApi {
 			//Api error
 			ex.printStackTrace();
 		}
-		return null;
+		throw new RobinhoodApiException();
 	}
 
     /**
@@ -396,7 +399,7 @@ public class RobinhoodApi {
             ex.printStackTrace();
         }
 
-        return null;
+		throw new RobinhoodApiException();
 	}
 
 	/**
@@ -425,7 +428,7 @@ public class RobinhoodApi {
 			ex.printStackTrace();
 		}
 
-		return null;
+		throw new RobinhoodApiException();
 	}
 
 	public SecurityOrderElement makeMarketStopOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time, float stopPrice) throws RobinhoodApiException, InvalidTickerException, RobinhoodNotLoggedInException {
@@ -443,7 +446,7 @@ public class RobinhoodApi {
             ex.printStackTrace();
         }
 
-        return null;
+        throw new RobinhoodApiException();
     }
 
 	/**
@@ -452,7 +455,7 @@ public class RobinhoodApi {
 	 * @param ticker Which symbol you are retrieving a quote for
 	 * @return
 	 */
-	public TickerQuoteElement getQuoteByTicker(String ticker) {
+	public TickerQuoteElement getQuoteByTicker(String ticker) throws RobinhoodApiException {
 
 		try {
 
@@ -466,7 +469,7 @@ public class RobinhoodApi {
 			ex.printStackTrace();
 		}
 
-		return null;
+		throw new RobinhoodApiException();
 	}
 	
 
