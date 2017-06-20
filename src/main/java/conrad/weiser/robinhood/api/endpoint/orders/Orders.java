@@ -130,24 +130,15 @@ public class Orders extends ApiMethod {
 		RequestManager requestManager = RequestManager.getInstance();
 
 		ApiMethod method = new GetTickerFundamental(ticker);
-		try {
 
-			TickerFundamentalElement response = requestManager.makeApiRequest(method);
+		TickerFundamentalElement response = requestManager.makeApiRequest(method);
 
-			//Does the ticker have a valid Instrument URL? If not, this ticker is invalid. Throw an error.
-			if (response.getInstrument() == null)
-				throw new InvalidTickerException();
+		//Does the ticker have a valid Instrument URL? If not, this ticker is invalid. Throw an error.
+		if (response.getInstrument() == null)
+			throw new InvalidTickerException();
 
-			//Otherwise, supply the InstrumentURL to the class to be used in the request
-			return response.getInstrument().toString();
-
-		} catch (UnirestException ex) {
-
-			//Api error
-			ex.printStackTrace();
-		}
-
-		throw new RobinhoodApiException("Error in the verifyTickerData function. Please report this as a bug on github");
+		//Otherwise, supply the InstrumentURL to the class to be used in the request
+		return response.getInstrument().toString();
 
 	}
 

@@ -1,7 +1,11 @@
 package conrad.weiser.robinhood.api;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import conrad.weiser.robinhood.api.endpoint.account.data.enums.PositionElement;
+import conrad.weiser.robinhood.api.endpoint.account.data.enums.PositionListElement;
+import conrad.weiser.robinhood.api.endpoint.account.methods.*;
 import conrad.weiser.robinhood.api.endpoint.authorize.data.Token;
 import conrad.weiser.robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import conrad.weiser.robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
@@ -24,12 +28,6 @@ import conrad.weiser.robinhood.api.endpoint.account.data.AccountHolderEmployment
 import conrad.weiser.robinhood.api.endpoint.account.data.AccountHolderInvestmentElement;
 import conrad.weiser.robinhood.api.endpoint.account.data.BasicAccountHolderInfoElement;
 import conrad.weiser.robinhood.api.endpoint.account.data.BasicUserInfoElement;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetAccountHolderAffiliationInfo;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetAccountHolderEmploymentInfo;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetAccountHolderInvestmentInfo;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetAccounts;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetBasicAccountHolderInfo;
-import conrad.weiser.robinhood.api.endpoint.account.methods.GetBasicUserInfo;
 import conrad.weiser.robinhood.api.endpoint.fundamentals.methods.GetTickerFundamental;
 import conrad.weiser.robinhood.api.endpoint.orders.data.SecurityOrderElement;
 import conrad.weiser.robinhood.api.endpoint.orders.enums.OrderTransactionType;
@@ -79,7 +77,7 @@ public class RobinhoodApi {
 		//Construct the managers
 		RobinhoodApi.requestManager = RequestManager.getInstance();
 		RobinhoodApi.configManager = ConfigurationManager.getInstance();
-		
+
 		//Log the user in and store the auth token
 		this.logUserIn(username, password);
 		
@@ -365,6 +363,26 @@ public class RobinhoodApi {
 		ApiMethod method = new GetTickerQuote(ticker);
 
 		return requestManager.makeApiRequest(method);
+
+	}
+
+	/**
+	 * Returns a list of {@link PositionElement} for each entry on the account's watchlist. If the quantity of the
+	 * {@link PositionElement} is above 0, that means that you have an active position in that stock. All of the other information
+	 * which can be retrieved from this can be found in the PositionElement page itself
+	 * @return
+	 * @throws RobinhoodApiException
+	 * @throws RobinhoodNotLoggedInException
+	 */
+	public List<PositionElement> getAccountStockPositions() throws RobinhoodApiException, RobinhoodNotLoggedInException {
+
+		//Create the API method
+		ApiMethod method = new GetAccountPositions();
+		method.addAuthTokenParameter();
+
+		//Return the current account positions
+		PositionListElement response = requestManager.makeApiRequest(method);
+		return response.getPositionList();
 
 	}
 	

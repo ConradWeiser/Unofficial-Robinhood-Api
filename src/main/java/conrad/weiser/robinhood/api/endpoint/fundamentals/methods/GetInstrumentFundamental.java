@@ -13,12 +13,9 @@ import conrad.weiser.robinhood.api.request.RequestMethod;
  */
 public class GetInstrumentFundamental extends Fundamentals {
 
-    public GetInstrumentFundamental(String instrumentId) {
+    public GetInstrumentFundamental(String instrumentUrl) {
 
-        this.setUrlBase("https://api.robinhood.com/instruments/" + instrumentId + "/");
-
-        //Add the headers into the request
-        this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "appliation/json"));
+        this.setUrlBase(instrumentUrl);
 
         //This method is run as GET
         this.setMethod(RequestMethod.GET);
