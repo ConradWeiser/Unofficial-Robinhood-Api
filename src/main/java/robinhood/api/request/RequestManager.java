@@ -12,6 +12,7 @@ import com.mashape.unirest.request.HttpRequestWithBody;
 
 import robinhood.api.ApiMethod;
 import robinhood.api.parameters.HttpHeaderParameter;
+import robinhood.api.throwables.RobinhoodApiException;
 
 
 public class RequestManager {
@@ -38,7 +39,7 @@ public class RequestManager {
 	}
 	
 	
-	public <T> T makeApiRequest(ApiMethod method) throws UnirestException {
+	public <T> T makeApiRequest(ApiMethod method) throws RobinhoodApiException {
 		
 		T response = null;
 				
@@ -73,7 +74,7 @@ public class RequestManager {
 	 * @throws UnirestException 
 	 */
 	@SuppressWarnings("unchecked")
-	private <T> T makePostRequest(ApiMethod method) throws UnirestException {
+	private <T> T makePostRequest(ApiMethod method) throws RobinhoodApiException {
 		
 		HttpRequestWithBody request = Unirest.post(method.getBaseUrl());
 		
@@ -85,27 +86,33 @@ public class RequestManager {
 			HttpHeaderParameter currentHeader = headerIterator.next();
 			request.header(currentHeader.getKey(), currentHeader.getValue());
 		}
-				
-		//Append the request body
-		request.body(method.getUrlParametersAsPostBody());
-				
-		//Make the request
-		HttpResponse<JsonNode> jsonResponse = request.asJson();
-				
-		//Parse the response with Gson
-		Gson gson = new Gson();
-		String responseJsonString = jsonResponse.getBody().toString();
-		
-		//If the response type for this is VOID (Meaning we are not expecting a response) do not
-		//try to use Gson
-		if(method.getReturnType() == Void.TYPE)
-			return (T) Void.TYPE;
-		
-		T data = gson.fromJson(responseJsonString, method.getReturnType());
-		return data;
-		
-		
-		
+
+		try {
+            //Append the request body
+            request.body(method.getUrlParametersAsPostBody());
+
+            //Make the request
+            HttpResponse<JsonNode> jsonResponse = request.asJson();
+
+            //Parse the response with Gson
+            Gson gson = new Gson();
+            String responseJsonString = jsonResponse.getBody().toString();
+
+            //If the response type for this is VOID (Meaning we are not expecting a response) do not
+            //try to use Gson
+            if(method.getReturnType() == Void.TYPE)
+                return (T) Void.TYPE;
+
+            T data = gson.fromJson(responseJsonString, method.getReturnType());
+            return data;
+
+        } catch (UnirestException ex) {
+
+            System.err.println("[RobinhoodApi] Failed to communicate with Robinhood servers, request failed");
+
+        }
+
+		throw new RobinhoodApiException();
 		
 	}
 	
@@ -114,7 +121,7 @@ public class RequestManager {
 	 * within the ApiMethod class 
 	 * @throws UnirestException 
 	 */
-	private <T> T makeGetRequest(ApiMethod method) throws UnirestException {
+	private <T> T makeGetRequest(ApiMethod method) throws RobinhoodApiException {
 	
 		GetRequest request = Unirest.get(method.getBaseUrl());
 
@@ -125,17 +132,29 @@ public class RequestManager {
 			HttpHeaderParameter currentHeader = headerIterator.next();
 			request.header(currentHeader.getKey(), currentHeader.getValue());
 		}
-		
-		//Make the request
-		HttpResponse<JsonNode> jsonResponse = request.asJson();
 
-		//Parse the response with Gson
-		Gson gson = new Gson();
-		String responseJsonString = jsonResponse.getBody().toString();
-				
-		T data = gson.fromJson(responseJsonString,  method.getReturnType());
-		return data;
-		
+		try {
+
+			//Make the request
+			HttpResponse<JsonNode> jsonResponse = request.asJson();
+
+			//Parse the response with Gson
+			Gson gson = new Gson();
+			String responseJsonString = jsonResponse.getBody().toString();
+
+			T data = gson.fromJson(responseJsonString, method.getReturnType());
+
+			return data;
+
+
+		} catch (UnirestException ex) {
+
+			System.err.println("[RobinhoodApi] Failed to communicate with Robinhood servers, request failed");
+
+		}
+
+       throw new RobinhoodApiException();
+
 	}
 	
 	

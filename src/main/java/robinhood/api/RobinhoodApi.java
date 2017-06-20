@@ -2,8 +2,6 @@ package robinhood.api;
 
 import java.util.logging.Logger;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import robinhood.api.endpoint.account.data.AccountArrayWrapper;
 import robinhood.api.endpoint.account.data.AccountElement;
 import robinhood.api.endpoint.account.data.AccountHolderAffiliationElement;
@@ -148,12 +146,9 @@ public class RobinhoodApi {
 				configManager.setAccountNumber(data.getAccountNumber());
 				
 				return RequestStatus.SUCCESS;
-				
-				
-			} catch (UnirestException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (RobinhoodNotLoggedInException e) {
+
+
+			}  catch (RobinhoodNotLoggedInException e) {
 				System.out.println("[Error] User is not logged in. You should never see this error. File a bug report if you do!");
 			}
 			return RequestStatus.FAILURE;
@@ -165,7 +160,7 @@ public class RobinhoodApi {
 	 * You should never see a "FAILURE" response from this. If so, file a bug report on github
 	 * @return an enum containing either "SUCCESS", "FAILURE" or "NOT_LOGGED_IN"
 	 */
-	public RequestStatus logUserOut() {
+	public RequestStatus logUserOut() throws RobinhoodApiException {
 		
 		try {
 					
@@ -181,10 +176,6 @@ public class RobinhoodApi {
 			
 			//If there was no token in the configManager, the user was never logged in
 			return RequestStatus.NOT_LOGGED_IN;
-		} catch (UnirestException e) {
-			
-			//API error.
-			return RequestStatus.FAILURE;
 		}
 		
 	}
@@ -195,21 +186,15 @@ public class RobinhoodApi {
 	 */
 	public AccountElement getAccountData() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
-		try {
-			
-			//Create the API method for this request
-			ApiMethod method = new GetAccounts();
-			method.addAuthTokenParameter();
-			
-			//TODO: This is a temporary fix, as the Robinhood API seems to have some features planned, without being implemented fully
-			AccountArrayWrapper data = requestManager.makeApiRequest(method);
-			return data.getResults();
-		} catch(UnirestException ex) {
-			
-			//API error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method for this request
+		ApiMethod method = new GetAccounts();
+		method.addAuthTokenParameter();
+
+		//TODO: This is a temporary fix, as the Robinhood API seems to have some features implemented, but are not used yet
+		AccountArrayWrapper data = requestManager.makeApiRequest(method);
+		return data.getResults();
+
 	}
 	
 	/**
@@ -217,21 +202,13 @@ public class RobinhoodApi {
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
 	public BasicUserInfoElement getBasicUserInfo() throws RobinhoodNotLoggedInException, RobinhoodApiException {
-		
-		try {
-			
-			//Create the API method for the request
-			ApiMethod method = new GetBasicUserInfo();
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//API error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method for the request
+		ApiMethod method = new GetBasicUserInfo();
+		method.addAuthTokenParameter();
+
+		return requestManager.makeApiRequest(method);
+
 	}
 	
 	/**
@@ -240,20 +217,13 @@ public class RobinhoodApi {
 	 */
 	public BasicAccountHolderInfoElement getAccountHolderInfo() throws RobinhoodNotLoggedInException, RobinhoodApiException {
 		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new GetBasicAccountHolderInfo();
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//API error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method
+		ApiMethod method = new GetBasicAccountHolderInfo();
+		method.addAuthTokenParameter();
+
+		return requestManager.makeApiRequest(method);
+
 	}
 	
 	/**
@@ -261,21 +231,13 @@ public class RobinhoodApi {
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
 	public AccountHolderAffiliationElement getAccountHolderAffiliation() throws RobinhoodNotLoggedInException, RobinhoodApiException {
-		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new GetAccountHolderAffiliationInfo();
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//APi error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method
+		ApiMethod method = new GetAccountHolderAffiliationInfo();
+		method.addAuthTokenParameter();
+
+		return requestManager.makeApiRequest(method);
+
 	}
 	
 	/**
@@ -283,21 +245,13 @@ public class RobinhoodApi {
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
 	public AccountHolderEmploymentElement getAccountHolderEmployment() throws RobinhoodNotLoggedInException, RobinhoodApiException {
-		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new GetAccountHolderEmploymentInfo();
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//Api error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method
+		ApiMethod method = new GetAccountHolderEmploymentInfo();
+		method.addAuthTokenParameter();
+
+		return requestManager.makeApiRequest(method);
+
 	}
 	
 	/**
@@ -305,21 +259,13 @@ public class RobinhoodApi {
 	 * @throws RobinhoodNotLoggedInException if the user is not logged in
 	 */
 	public AccountHolderInvestmentElement getAccountHolderInvestment() throws RobinhoodNotLoggedInException, RobinhoodApiException {
-		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new GetAccountHolderInvestmentInfo();
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//Api error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method
+		ApiMethod method = new GetAccountHolderInvestmentInfo();
+		method.addAuthTokenParameter();
+
+		return requestManager.makeApiRequest(method);
+
 	}
 	
 	/**
@@ -327,18 +273,11 @@ public class RobinhoodApi {
 	 */
 	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException {
 		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new GetTickerFundamental(ticker);
-			return requestManager.makeApiRequest(method);
-		} catch (UnirestException ex) {
-			
-			//Api error
-			ex.printStackTrace();
-		}
 
-		throw new RobinhoodApiException();
+		//Create the API method
+		ApiMethod method = new GetTickerFundamental(ticker);
+		return requestManager.makeApiRequest(method);
+
 	} 
 	
 	/**
@@ -353,21 +292,12 @@ public class RobinhoodApi {
 	 * @throws RobinhoodNotLoggedInException  Thrown when this Robinhood Api instance is not logged into an account. Run the login method first.
 	 */
 	public SecurityOrderElement makeLimitOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
-		
-		try {
-			
-			//Create the API method
-			ApiMethod method = new MakeLimitOrder(ticker, timeInForce, limitPrice, quantity, orderType);
-			method.addAuthTokenParameter();
-			
-			return requestManager.makeApiRequest(method);
-			
-		} catch (UnirestException ex) {
-			
-			//Api error
-			ex.printStackTrace();
-		}
-		throw new RobinhoodApiException();
+
+		//Create the API method
+		ApiMethod method = new MakeLimitOrder(ticker, timeInForce, limitPrice, quantity, orderType);
+		method.addAuthTokenParameter();
+		return requestManager.makeApiRequest(method);
+
 	}
 
     /**
@@ -385,21 +315,12 @@ public class RobinhoodApi {
      */
 	public SecurityOrderElement makeLimitStopOrder(String ticker, TimeInForce timeInForce, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) throws InvalidTickerException, RobinhoodApiException, RobinhoodNotLoggedInException {
 
-		try {
+		//Create the API method
+		ApiMethod method = new MakeLimitStopOrder(ticker, timeInForce, limitPrice, quantity, orderType, stopPrice);
+		method.addAuthTokenParameter();
 
-			//Create the API method
-			ApiMethod method = new MakeLimitStopOrder(ticker, timeInForce, limitPrice, quantity, orderType, stopPrice);
-			method.addAuthTokenParameter();
+		return requestManager.makeApiRequest(method);
 
-			return requestManager.makeApiRequest(method);
-
-		} catch (UnirestException ex) {
-
-		    //Api error
-            ex.printStackTrace();
-        }
-
-		throw new RobinhoodApiException();
 	}
 
 	/**
@@ -414,40 +335,23 @@ public class RobinhoodApi {
 	 */
 	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
 
-		try {
-
 			//Create the API method
 			ApiMethod method = new MakeMarketOrder(ticker, quantity, orderType, time);
 			method.addAuthTokenParameter();
 
 			return requestManager.makeApiRequest(method);
 
-		} catch (UnirestException ex) {
-
-			//Api error
-			ex.printStackTrace();
-		}
-
-		throw new RobinhoodApiException();
 	}
 
 	public SecurityOrderElement makeMarketStopOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time, float stopPrice) throws RobinhoodApiException, InvalidTickerException, RobinhoodNotLoggedInException {
 
-	    try {
+		//Create the API method
+		ApiMethod method = new MakeMarketStopOrder(ticker, quantity, orderType, time, stopPrice);
+        method.addAuthTokenParameter();
 
-	        //Create the API method
-            ApiMethod method = new MakeMarketStopOrder(ticker, quantity, orderType, time, stopPrice);
-            method.addAuthTokenParameter();
+		return requestManager.makeApiRequest(method);
 
-            return requestManager.makeApiRequest(method);
-        } catch (UnirestException ex) {
-
-	        //Api error
-            ex.printStackTrace();
-        }
-
-        throw new RobinhoodApiException();
-    }
+}
 
 	/**
 	 * Method returning a {@link TickerQuoteElement} for the supplied ticker. Contains general information, such as the
@@ -457,19 +361,11 @@ public class RobinhoodApi {
 	 */
 	public TickerQuoteElement getQuoteByTicker(String ticker) throws RobinhoodApiException {
 
-		try {
+		//Create the API method
+		ApiMethod method = new GetTickerQuote(ticker);
 
-			//Create the API method
-			ApiMethod method = new GetTickerQuote(ticker);
+		return requestManager.makeApiRequest(method);
 
-			return requestManager.makeApiRequest(method);
-
-		} catch (UnirestException ex) {
-
-			ex.printStackTrace();
-		}
-
-		throw new RobinhoodApiException();
 	}
 	
 
