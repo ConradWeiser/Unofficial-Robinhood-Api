@@ -59,7 +59,7 @@ public abstract class ApiMethod {
 	
 	/**
 	 * A method which adds a HttpHeaderParameter to the API request header
-	 * @param The parameter which should be added into the ApiRequest
+	 * @param param The parameter which should be added into the ApiRequest
 	 */
 	protected void addHttpHeaderParameter(HttpHeaderParameter param) {
 		httpHeaderParameters.add(param);
