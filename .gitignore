@@ -34,3 +34,6 @@ proguard/
 build/
 
 /src/main/java/Test.java
+
+#Artifacts location
+classes/artifacts/
