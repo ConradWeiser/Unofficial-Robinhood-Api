@@ -1,6 +1,7 @@
 package conrad.weiser.robinhood.api;
 
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Logger;
 
 import conrad.weiser.robinhood.api.endpoint.account.data.enums.PositionElement;
@@ -374,7 +375,7 @@ public class RobinhoodApi {
 	 * @throws RobinhoodApiException
 	 * @throws RobinhoodNotLoggedInException
 	 */
-	public List<PositionElement> getAccountStockPositions() throws RobinhoodApiException, RobinhoodNotLoggedInException {
+	public List<PositionElement> getAccountWatchlist() throws RobinhoodApiException, RobinhoodNotLoggedInException {
 
 		//Create the API method
 		ApiMethod method = new GetAccountPositions();
@@ -383,6 +384,34 @@ public class RobinhoodApi {
 		//Return the current account positions
 		PositionListElement response = requestManager.makeApiRequest(method);
 		return response.getPositionList();
+
+	}
+
+	/**
+	 * Method which gets all of the account positions a user actually has shares in.
+	 * @return {@link PositionElement} containing all of the stocks an account has shares in
+	 * @throws RobinhoodApiException
+	 * @throws RobinhoodNotLoggedInException
+	 */
+	public List<PositionElement> getAccountPositions() throws RobinhoodApiException, RobinhoodNotLoggedInException {
+
+		//Get the entire watchlist for the account
+		List<PositionElement> accountWatchlist = this.getAccountWatchlist();
+
+		//Parse the watchlist for things which have a quantity more than one and return it
+		Vector<PositionElement> accountPositions = new Vector<>();
+
+		for(PositionElement currentWatchlistEntity : accountWatchlist) {
+
+			if(currentWatchlistEntity.getQuantity() >= 1) {
+
+				accountPositions.add(currentWatchlistEntity);
+			}
+		}
+
+		return accountPositions;
+
+
 
 	}
 	
