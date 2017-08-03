@@ -38,8 +38,20 @@ Currently, the wrapper does NOT support accounts with Multifactor Authentication
 Command | Function | Returns | Description | Requires Logged In User
 ---- | ------- | -------- | ------- | -----
 Login | logUserIn("username", "password") | Request Status (Put link here)| Logs a user into the instanced object. | <center>:heavy_multiplication_x:</center>
-Logout | logUserOut | Request Status | Logs a user out of the instanced class, and deletes the stored authentication token | <center>:heavy_check_mark:</center>
+Logout | logUserOut() | Request Status | Logs a user out of the instanced class, and deletes the stored authentication token | <center>:heavy_check_mark:</center>
 Retrieve Authentication Token | getAccountAuthToken() | String | Retrieves the Account Token which is used to run requests for the currently logged in user. | <center>:heavy_check_mark:</center>
+
+### **Account Information**
+
+Command | Function | Returns | Description | Requires Logged In User
+------ | ------- | ------ | ------ | ------
+Get Account Data | getAccountData() | [Link to AccountElement] | Retrieves data generalized to your account. This includes but is not limited to: Your current buying power, your account number, your unsettled funds, and various other bits of information. | <center>:heavy_check_mark:</center>
+Get Basic Information | getBasicUserInfo() | [Link to BasicUserInfoElement] | Retrieves basic information such as the username, the name attached to the account, and the email. | <center>:heavy_check_mark:</center>
+Basic Holder Information | getAccountHolderInfo() | [Link to BasicAccountHolderInfoElement] | Retrives more specific information regarding the user for the account. This includes: Address, State, Last four digits of ssn, phone number, and various other bits of information. | <center>:heavy_check_mark:</center>
+Holder Affiliation Information | getAccountHolderAffiliation() | [Link to AccountHolderAffiliationElement] | Retrieves data about any registered securities or firms that are registered to your robinhood account, if any exist. | <center>:heavy_check_mark:</center>
+Holder Employment Information | getAccountHolderEmployment() | [Link to AccountHolderEmploymentElement] | Retrieves data about any employment information saved to your robinhood account. | <center>:heavy_check_mark:</center>
+Holder Investment Preferences | getAccountHolderInvestment() | [Link to AccountHolderInvestmentElement] | Retrieves data about your investment preferences. This includes but isn't limited to: annual income specifications, investment experience, tax bracket, specified total net work, and various other bits of related data. | <center>:heavy_check_mark:</center>
+
 
 
 

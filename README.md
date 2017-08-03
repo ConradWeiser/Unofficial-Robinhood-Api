@@ -45,6 +45,8 @@ Float buyingPower = accountData.getBuyingPower();
 System.out.println(accountNumber + " : " + String.valueOf(buyingPower));
 ```
 
+### For more detailed instructions on usage, [Click me!](https://github.com/ConradWeiser/Unofficial-Robinhood-Api/blob/master/Usage.md)
+
 ## Things to do
 
 * Include a more comprehensive guide on what data you are getting from each method (Probably within the javadocs)
