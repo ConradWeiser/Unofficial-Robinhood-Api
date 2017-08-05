@@ -414,6 +414,23 @@ public class RobinhoodApi {
 
 
 	}
+
+	/**
+	 * A method which attempts to throw a {@link RobinhoodNotLoggedInException} to see if there is currently a user logged
+	 * in or not.
+	 * @return If there is a user logged into the Robinhood Instance or not.
+	 */
+	public boolean isLoggedIn() {
+
+		try {
+
+			String token = getAccountAuthToken();
+
+		} catch (RobinhoodNotLoggedInException e) {
+			return false;
+		}
+		return true;
+	}
 	
 
 	
