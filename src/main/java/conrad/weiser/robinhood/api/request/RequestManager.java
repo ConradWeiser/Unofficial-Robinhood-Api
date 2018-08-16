@@ -38,11 +38,6 @@ public class RequestManager {
 		this.okClient = new OkHttpClient();
 	}
 
-	/**
-	 * Media type used by OK Http defining Json and the utf-8 charset
-	 */
-	static final MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-
 	OkHttpClient okClient;
 	
 	
@@ -83,7 +78,7 @@ public class RequestManager {
 	@SuppressWarnings("unchecked")
 	private <T> T makePostRequest(ApiMethod method) throws RobinhoodApiException {
 		
-		RequestBody body = RequestBody.create(JSON, method.getUrlParametersAsPostBody());
+		RequestBody body = RequestBody.create(method.getMediaType(), method.getUrlParametersAsPostBody());
 		Request.Builder request = new Request.Builder();
 			
 		//Append each of the headers for the method
@@ -106,9 +101,7 @@ public class RequestManager {
             //Parse the response with Gson
             Gson gson = new Gson();
             String responseJsonString = response.body().string();
-
-            System.out.println("Test Response" + responseJsonString);
-
+            
             //If the response type for this is VOID (Meaning we are not expecting a response) do not
             //try to use Gson
             if(method.getReturnType() == Void.TYPE)
@@ -136,7 +129,7 @@ public class RequestManager {
 	 */
 	private <T> T makeGetRequest(ApiMethod method) throws RobinhoodApiException {
 
-		RequestBody body = RequestBody.create(JSON, method.getUrlParametersAsPostBody());
+		RequestBody body = RequestBody.create(method.getMediaType(), method.getUrlParametersAsPostBody());
 		Request.Builder request = new Request.Builder();
 
 		//Append each of the headers for the method
