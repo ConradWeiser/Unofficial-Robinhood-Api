@@ -33,6 +33,7 @@ import conrad.weiser.robinhood.api.endpoint.fundamentals.methods.GetTickerFundam
 import conrad.weiser.robinhood.api.endpoint.orders.data.SecurityOrderElement;
 import conrad.weiser.robinhood.api.endpoint.orders.enums.OrderTransactionType;
 import conrad.weiser.robinhood.api.request.RequestManager;
+import conrad.weiser.robinhood.api.throwables.TickerNotExistsException;
 
 public class RobinhoodApi {
 	
@@ -270,12 +271,18 @@ public class RobinhoodApi {
 	/**
 	 * Method returning a {@link TickerFundamentalElement} for the supplied ticker name
 	 */
-	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException {
+	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException, TickerNotExistsException {
 		
 
 		//Create the API method
 		ApiMethod method = new GetTickerFundamental(ticker);
-		return requestManager.makeApiRequest(method);
+		TickerFundamentalElement element = requestManager.makeApiRequest(method);
+
+		//Verify that we got proper ticker data. If not, throw an error.
+		if(element.getInstrument() == null)
+			throw new TickerNotExistsException(ticker);
+
+		return element;
 
 	} 
 	
