@@ -11,8 +11,6 @@ import conrad.weiser.robinhood.api.endpoint.authorize.data.Token;
 import conrad.weiser.robinhood.api.endpoint.authorize.methods.AuthorizeWithoutMultifactor;
 import conrad.weiser.robinhood.api.endpoint.authorize.methods.LogoutFromRobinhood;
 import conrad.weiser.robinhood.api.endpoint.fundamentals.data.TickerFundamentalElement;
-import conrad.weiser.robinhood.api.endpoint.oauth.data.OauthTokenMigrationElement;
-import conrad.weiser.robinhood.api.endpoint.oauth.methods.MigrateAuthToOauth;
 import conrad.weiser.robinhood.api.endpoint.orders.enums.TimeInForce;
 import conrad.weiser.robinhood.api.endpoint.orders.methods.MakeLimitOrder;
 import conrad.weiser.robinhood.api.endpoint.orders.methods.MakeLimitStopOrder;
@@ -397,27 +395,6 @@ public class RobinhoodApi {
 	}
 
 	/**
-	 * Converts a Authorization token to an OAuth authorization internally. Populates data in the Configuration manager.
-	 *
-	 * @throws RobinhoodNotLoggedInException
-	 * @throws RobinhoodApiException
-	 */
-	private void convertTokenToOauthToken() throws RobinhoodNotLoggedInException, RobinhoodApiException {
-
-		// Create the API Method
-		ApiMethod method = new MigrateAuthToOauth();
-		method.addAuthTokenParameter();
-
-		// Store the oauth token information in the configuration manager
-		OauthTokenMigrationElement response = requestManager.makeApiRequest(method);
-
-		ConfigurationManager configManager = ConfigurationManager.getInstance();
-		configManager.setOauthToken(response.getAccess_token());
-		configManager.setOauthRefreshToken(response.getRefresh_token());
-
-	}
-
-	/**
 	 * Method which gets all of the account positions a user actually has shares in.
 	 * @return {@link PositionElement} containing all of the stocks an account has shares in
 	 * @throws RobinhoodApiException
@@ -440,6 +417,9 @@ public class RobinhoodApi {
 		}
 
 		return accountPositions;
+
+
+
 	}
 
 	/**
