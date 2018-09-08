@@ -16,7 +16,18 @@ public class ConfigurationManager {
 	 * The authentication token for the logged in user, if one exists
 	 */
 	private String authToken = null;
-	
+
+	/**
+	 * Storage for the OAuth2 authorization token - This is different than the standard authToken, as it gives
+	 * access to features such as crypto or options which are unavailable otherwise
+	 */
+	private String oauthToken = null;
+
+	/**
+	 * Refresh token used to regenerate the oauth token if it's expired
+	 */
+	private String oauthRefreshToken = null;
+
 	/**
 	 * The Account Number for the account logged in. This variable is used for various other functions.
 	 */
@@ -70,7 +81,7 @@ public class ConfigurationManager {
 	/**
 	 * Method which registers the authToken for the user into the Configuration Manager
 	 * 
-	 * @param The verified Authorization Token for the user
+	 * @param token The verified Authorization Token for the user
 	 */
 	public void setAuthToken(String token) {
 		
@@ -111,7 +122,20 @@ public class ConfigurationManager {
 		return "https://api.robinhood.com/accounts/" + this.accountNumber + "/";
 	}
 
-	
-	
 
+	public String getOauthToken() {
+		return oauthToken;
+	}
+
+	public void setOauthToken(String oauthToken) {
+		this.oauthToken = oauthToken;
+	}
+
+	public String getOauthRefreshToken() {
+		return oauthRefreshToken;
+	}
+
+	public void setOauthRefreshToken(String oauthRefreshToken) {
+		this.oauthRefreshToken = oauthRefreshToken;
+	}
 }
