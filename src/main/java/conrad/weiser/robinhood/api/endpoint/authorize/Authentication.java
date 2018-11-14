@@ -4,6 +4,10 @@ import conrad.weiser.robinhood.api.ApiMethod;
 
 public abstract class Authentication extends ApiMethod {
 	
+  
+    public static String client_id = "c82SH0WZOsabOXGP2sxqcj34FxkvfnWRZBKlBjFS";
+
+
 	protected Authentication() {
 		
 		super("authentication");

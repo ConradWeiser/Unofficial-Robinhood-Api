@@ -83,7 +83,7 @@ public abstract class ApiMethod {
 	 * @throws RobinhoodNotLoggedInException if the token does not exist. If the user is not logged in.
 	 */
 	protected void addAuthTokenParameter() throws RobinhoodNotLoggedInException {
-		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", "Token " + manager.getToken()));
+		addHttpHeaderParameter(new HttpHeaderParameter("Authorization", "Bearer " + manager.getToken()));
 	}
 	
 	/**
@@ -99,6 +99,17 @@ public abstract class ApiMethod {
 	public String getBody() {
 		return this.body;
 	}
+	
+	   
+    /**
+     * Sets the body.
+     *
+     * @param body the new body
+     */
+    public void setBody(String body) {
+      this.body = body;
+    }
+
 	
 	/**
 	 * Method to return what the ReturnType is
