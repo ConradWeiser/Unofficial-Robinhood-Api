@@ -54,13 +54,6 @@ System.out.println(accountNumber + " : " + String.valueOf(buyingPower));
 * Streamline the library framework in general. Currently things work very well, but it's not perfect
 * Update this Readme so it's more pretty, and has more information. Consider this a v-0.1 as I continue to write the library
 
-
-## Disclaimer
-I have never taken up a project working with APIs like this. I intend to write this wrapper to the best of my ability, and continue to give support/make changes as time passes.
-
-I however am a student, and have never programmed in a professional enviroment. Things might seem a little messy until the library gets a little closer to completion.
-
-However, that being said, I aim to make the finished project both efficient in terms of how much computing power it requires, and easy for other developers to build functionality on top of. Stay tuned for future updates!
 ____
 
 If you have any questions, comments or suggestions, please do throw me an Email! 
