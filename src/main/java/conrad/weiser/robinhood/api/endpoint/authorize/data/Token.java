@@ -6,11 +6,11 @@ package conrad.weiser.robinhood.api.endpoint.authorize.data;
  */
 public class Token {
 	
-	private String token = null;
+	private String access_token = null;
 	
 	public String getToken() {
 		
-		return this.token;
+		return this.access_token;
 	}
 	
 	@Override
