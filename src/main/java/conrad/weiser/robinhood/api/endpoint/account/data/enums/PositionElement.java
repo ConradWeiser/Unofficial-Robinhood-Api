@@ -6,6 +6,7 @@ import conrad.weiser.robinhood.api.endpoint.fundamentals.data.InstrumentFundamen
 import conrad.weiser.robinhood.api.endpoint.fundamentals.methods.GetInstrumentFundamental;
 import conrad.weiser.robinhood.api.request.RequestManager;
 import conrad.weiser.robinhood.api.throwables.RobinhoodApiException;
+import conrad.weiser.robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 /**
  * Element containing information of a given position which exists on a users watchlist.
@@ -55,7 +56,7 @@ public class PositionElement {
         return quantity;
     }
 
-    public String getStockName() {
+    public String getStockName() throws RobinhoodNotLoggedInException {
 
         ApiMethod method = new GetInstrumentFundamental(this.instrument);
         InstrumentFundamentalElement element;
@@ -73,7 +74,7 @@ public class PositionElement {
 
     }
 
-    public String getStockTicker() {
+    public String getStockTicker() throws RobinhoodNotLoggedInException {
 
         ApiMethod method = new GetInstrumentFundamental(this.instrument);
         InstrumentFundamentalElement element;

@@ -4,6 +4,7 @@ import conrad.weiser.robinhood.api.endpoint.fundamentals.Fundamentals;
 import conrad.weiser.robinhood.api.endpoint.fundamentals.data.InstrumentFundamentalElement;
 import conrad.weiser.robinhood.api.parameters.HttpHeaderParameter;
 import conrad.weiser.robinhood.api.request.RequestMethod;
+import conrad.weiser.robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 /**
  * Given a instrument ID, this method returns a {@link conrad.weiser.robinhood.api.endpoint.fundamentals.data.InstrumentFundamentalElement}
@@ -13,9 +14,13 @@ import conrad.weiser.robinhood.api.request.RequestMethod;
  */
 public class GetInstrumentFundamental extends Fundamentals {
 
-    public GetInstrumentFundamental(String instrumentUrl) {
+    public GetInstrumentFundamental(String instrumentUrl) throws RobinhoodNotLoggedInException {
 
         this.setUrlBase(instrumentUrl);
+
+        this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "appliation/json"));
+
+        this.addAuthTokenParameter();
 
         //This method is run as GET
         this.setMethod(RequestMethod.GET);

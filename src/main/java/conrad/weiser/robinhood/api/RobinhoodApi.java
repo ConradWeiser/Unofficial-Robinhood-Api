@@ -273,7 +273,7 @@ public class RobinhoodApi {
 	/**
 	 * Method returning a {@link TickerFundamentalElement} for the supplied ticker name
 	 */
-	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException, TickerNotExistsException {
+	public TickerFundamentalElement getTickerFundamental(String ticker) throws RobinhoodApiException, TickerNotExistsException, RobinhoodNotLoggedInException {
 		
 
 		//Create the API method
@@ -341,10 +341,10 @@ public class RobinhoodApi {
 	 * @throws InvalidTickerException if the ticker supplied was invalid
 	 * @throws RobinhoodNotLoggedInException if you are not logged into Robinhood on this API object
 	 */
-	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
+	public SecurityOrderElement makeMarketOrder(String ticker, int quantity, OrderTransactionType orderType, TimeInForce time, float price) throws InvalidTickerException, RobinhoodNotLoggedInException, RobinhoodApiException {
 
 			//Create the API method
-			ApiMethod method = new MakeMarketOrder(ticker, quantity, orderType, time);
+			ApiMethod method = new MakeMarketOrder(ticker, quantity, orderType, time, price);
 			method.addAuthTokenParameter();
 
 			return requestManager.makeApiRequest(method);

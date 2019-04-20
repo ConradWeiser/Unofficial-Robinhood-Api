@@ -11,6 +11,7 @@ import conrad.weiser.robinhood.api.parameters.HttpHeaderParameter;
 import conrad.weiser.robinhood.api.request.RequestManager;
 import conrad.weiser.robinhood.api.request.RequestMethod;
 import conrad.weiser.robinhood.api.throwables.RobinhoodApiException;
+import conrad.weiser.robinhood.api.throwables.RobinhoodNotLoggedInException;
 
 public class Orders extends ApiMethod {
 
@@ -33,7 +34,7 @@ public class Orders extends ApiMethod {
 	 */
 	protected void setEndpointParameters() {
 
-		this.setUrlBase("https://api.robinhood.com/orders/");
+		this.setUrlBase("https://api.robinhood.com/orders");
 
 		//Add the send-receive headers into the request
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "application/json"));
@@ -123,7 +124,7 @@ public class Orders extends ApiMethod {
 	 *
 	 * @throws InvalidTickerException
 	 */
-	protected String verifyTickerData(String ticker) throws RobinhoodApiException, InvalidTickerException {
+	protected String verifyTickerData(String ticker) throws RobinhoodApiException, InvalidTickerException, RobinhoodNotLoggedInException {
 
 		//Make a Ticker Fundamental API request for the supplied ticker
 		RequestManager requestManager = RequestManager.getInstance();

@@ -22,7 +22,7 @@ public class MakeLimitStopOrder extends Orders {
 
     private String tickerInstrumentUrl = null;
 
-    public MakeLimitStopOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) throws RobinhoodApiException, InvalidTickerException {
+    public MakeLimitStopOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType, float stopPrice) {
 
         this.ticker = ticker;
         this.time = time;
@@ -34,13 +34,13 @@ public class MakeLimitStopOrder extends Orders {
         //Set the normal parameters for this endpoint
         setEndpointParameters();
 
-        //Set the order parameters
-        setOrderParameters();
-
         try {
 
             //Verify the ticker, and add the instrument URL to be used for later
             this.tickerInstrumentUrl = verifyTickerData(this.ticker);
+
+            // Set the order parameters
+            setOrderParameters();
 
         } catch (Exception e) {
 
@@ -62,14 +62,15 @@ public class MakeLimitStopOrder extends Orders {
 
         //Add the account URL for the currently logged in account
         this.addUrlParameter(new UrlParameter("account", ConfigurationManager.getInstance().getAccountUrl()));
-        this.addUrlParameter(new UrlParameter("instrument", this.tickerInstrumentUrl));
         this.addUrlParameter(new UrlParameter("symbol", this.ticker));
-        this.addUrlParameter(new UrlParameter("type", "limit"));
+        this.addUrlParameter(new UrlParameter("instrument", this.tickerInstrumentUrl));
         this.addUrlParameter(new UrlParameter("time_in_force", getTimeInForceString(this.time)));
-        this.addUrlParameter(new UrlParameter("price", this.limitPrice));
         this.addUrlParameter(new UrlParameter("trigger", "immediate"));
-        this.addUrlParameter(new UrlParameter("quantity", String.valueOf(this.quantity)));
+        this.addUrlParameter(new UrlParameter("type", "limit"));
+        this.addUrlParameter(new UrlParameter("price", this.limitPrice));
         this.addUrlParameter(new UrlParameter("side", getOrderSideString(this.orderType)));
+        this.addUrlParameter(new UrlParameter("quantity", String.valueOf(this.quantity)));
+
     }
 
 }

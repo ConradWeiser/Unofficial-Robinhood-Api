@@ -18,7 +18,7 @@ public class MakeLimitOrder extends Orders {
 	
 	private String tickerInstrumentUrl = null;
 	
-	public MakeLimitOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType) throws RobinhoodApiException, InvalidTickerException {
+	public MakeLimitOrder(String ticker, TimeInForce time, float limitPrice, int quantity, OrderTransactionType orderType) {
 		
 		this.ticker = ticker;
 		this.time = time;
@@ -29,13 +29,13 @@ public class MakeLimitOrder extends Orders {
 		//Set the normal parameters for this endpoint
 		setEndpointParameters();
 
-		//Set the order parameters
-		setOrderParameters();
-		
 		try {
 
 			//Verify the ticker, and add the instrument URL to be used for later
 			this.tickerInstrumentUrl = verifyTickerData(this.ticker);
+
+			//Set the order parameters
+			setOrderParameters();
 
 		} catch (Exception e) {
 

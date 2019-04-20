@@ -1,6 +1,7 @@
 package conrad.weiser.robinhood.api.request;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import conrad.weiser.robinhood.api.ApiMethod;
 import conrad.weiser.robinhood.api.parameters.HttpHeaderParameter;
 import conrad.weiser.robinhood.api.throwables.RobinhoodApiException;
@@ -78,6 +79,9 @@ public class RequestManager {
 	@SuppressWarnings("unchecked")
 	private <T> T makePostRequest(ApiMethod method) throws RobinhoodApiException {
 
+		//System.err.println("[Post Request]");
+		//System.out.println(method.toInformationString());
+
 		RequestBody body = RequestBody.create(method.getMediaType(), method.getBody());
 		Request.Builder request = new Request.Builder();
 			
@@ -101,7 +105,7 @@ public class RequestManager {
             //Parse the response with Gson
             Gson gson = new Gson();
             String responseJsonString = response.body().string();
-            
+
             //If the response type for this is VOID (Meaning we are not expecting a response) do not
             //try to use Gson
             if(method.getReturnType() == Void.TYPE)
@@ -114,7 +118,9 @@ public class RequestManager {
 
             System.err.println("[RobinhoodApi] Malformed request URL");
 
-        } catch (IOException e) {
+        } catch (JsonSyntaxException e) {
+			System.err.println("[RobinhoodAPI] Internal API Error on POST call. Expected a Json response. Got an HTML response instead.");
+		} catch (IOException e) {
 			System.err.println("[RobinhoodAPI] Error connecting to Robinhood servers");
 		}
 
@@ -125,9 +131,13 @@ public class RequestManager {
 	/**
 	 * Method which uses Unirest to send a GET request to the specified URL saved
 	 * within the ApiMethod class 
-	 * @throws MalformedURLException Request URL is not formatted as a valid HTTP URL
+	 * @throws RobinhoodApiException Request URL is not formatted as a valid HTTP URL
 	 */
 	private <T> T makeGetRequest(ApiMethod method) throws RobinhoodApiException {
+
+		// TODO Print debug information
+		//System.err.println("[Get Request]");
+		//System.out.println(method.toInformationString());
 
 		RequestBody body = RequestBody.create(method.getMediaType(), method.getUrlParametersAsPostBody());
 		Request.Builder request = new Request.Builder();

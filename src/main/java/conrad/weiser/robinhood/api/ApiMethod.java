@@ -97,6 +97,9 @@ public abstract class ApiMethod {
 	 * Method which returns the request body
 	 */
 	public String getBody() {
+		if(this.body == null) {
+			return "";
+		}
 		return this.body;
 	}
 	
@@ -223,4 +226,26 @@ public abstract class ApiMethod {
 		return getClass().getSimpleName();
 	}
 
+	/**
+	 * Method which returns all relevent information about this ApiCall, including the base URL and headers which
+	 * are to be sent using such.
+	 *
+	 * Mostly intended for debugging purposes.
+	 */
+	public String toInformationString() {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("Base URL: ").append(this.urlBase).append("\n");
+		builder.append("--HTTP Header Parameters--\n");
+		for(HttpHeaderParameter param : httpHeaderParameters) {
+			builder.append(param.getKey()).append(" : ").append(param.getValue()).append("\n");
+		}
+		builder.append("--Url Parameters--\n");
+		for(UrlParameter param : urlParameters) {
+			builder.append(param.getKey()).append(" : ").append(param.getValue()).append("\n");
+		}
+		builder.append("\n");
+
+		return builder.toString();
+	}
 }

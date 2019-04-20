@@ -51,7 +51,7 @@ public class UrlParameter {
 	 * Method which returns the key for this object
 	 * @return The objects key
 	 */
-	protected String getKey() {
+	public String getKey() {
 		
 		return this.key;
 	}
@@ -60,7 +60,7 @@ public class UrlParameter {
 	 * Method which returns the value for this object
 	 * @return The objects value
 	 */
-	protected String getValue() {
+	public String getValue() {
 		return this.value;
 	}
 	
