@@ -34,7 +34,7 @@ public class Orders extends ApiMethod {
 	 */
 	protected void setEndpointParameters() {
 
-		this.setUrlBase("https://api.robinhood.com/orders");
+		this.setUrlBase("https://api.robinhood.com/orders/");
 
 		//Add the send-receive headers into the request
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "application/json"));

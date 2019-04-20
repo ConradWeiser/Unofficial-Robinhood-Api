@@ -27,6 +27,7 @@ public class MakeMarketOrder extends Orders {
         this.quantity = quantity;
         this.orderType = orderType;
         this.time = time;
+        this.price = price;
 
         //Set the normal parameters for this endpoint
         setEndpointParameters();
