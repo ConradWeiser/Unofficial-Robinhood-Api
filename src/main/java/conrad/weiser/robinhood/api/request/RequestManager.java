@@ -79,8 +79,9 @@ public class RequestManager {
 	@SuppressWarnings("unchecked")
 	private <T> T makePostRequest(ApiMethod method) throws RobinhoodApiException {
 
-		System.err.println("[Post Request]");
-		System.out.println(method.toInformationString());
+		//TODO: Build a debug system which uses the two commented lines below as information providers
+		//System.err.println("[Post Request]");
+		//System.out.println(method.toInformationString());
 
 		RequestBody body = RequestBody.create(method.getMediaType(), method.getBody());
 		Request.Builder request = new Request.Builder();
@@ -135,7 +136,7 @@ public class RequestManager {
 	 */
 	private <T> T makeGetRequest(ApiMethod method) throws RobinhoodApiException {
 
-		// TODO Print debug information
+		//TODO: Build a debug system which uses the two commented lines below as information providers
 		//System.err.println("[Get Request]");
 		//System.out.println(method.toInformationString());
 
