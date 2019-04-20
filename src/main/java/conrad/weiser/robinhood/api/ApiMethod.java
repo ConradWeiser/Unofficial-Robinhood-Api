@@ -34,7 +34,7 @@ public abstract class ApiMethod {
 	/**
 	 * Linked List containing all of the urlParameters for the next request
 	 */
-	private final List<UrlParameter> urlParameters = new LinkedList<UrlParameter>();
+	protected List<UrlParameter> urlParameters = new LinkedList<UrlParameter>();
 	
 	/**
 	 * Linked List containing all of the HttpHeaderParameters for the next request

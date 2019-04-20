@@ -12,6 +12,12 @@ import conrad.weiser.robinhood.api.request.RequestManager;
 import conrad.weiser.robinhood.api.request.RequestMethod;
 import conrad.weiser.robinhood.api.throwables.RobinhoodApiException;
 import conrad.weiser.robinhood.api.throwables.RobinhoodNotLoggedInException;
+import okhttp3.MediaType;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class Orders extends ApiMethod {
 
@@ -39,6 +45,8 @@ public class Orders extends ApiMethod {
 		//Add the send-receive headers into the request
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Accept", "application/json"));
 		this.addHttpHeaderParameter(new HttpHeaderParameter("Content-Type", "application/x-www-form-urlencoded"));
+
+		this.mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
 		//This method should be ran as POST
 		this.setMethod(RequestMethod.POST);
@@ -142,7 +150,15 @@ public class Orders extends ApiMethod {
 
 	}
 
+	@Override
+	public String getBody() {
+		return getUrlParametersAsPostBody();
+	}
 
+	@Override
+	public URL getUrl() throws MalformedURLException {
+		return new URL(this.getBaseUrl());
+	}
 
 	public boolean isOrderSafe() {
 		return orderSafe;
