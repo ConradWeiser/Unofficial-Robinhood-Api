@@ -1,4 +1,9 @@
 
+# Consider this repository deprecated
+
+Unfortunately, due to some incidents with people accessing the Robinhood APIs directly, Robinhood Financial LLC has made some drastic changes to their API. This library no longer works with the current service. 
+
+Robinhood does not appear like they will be making their new API system public, and as such, this repository should be considered archived. I hope it was some use while it was still alive!
 
 # Unofficial Robinhood Api (Java Wrapper)
 
